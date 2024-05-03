@@ -3,7 +3,7 @@ import os
 import requests
 import json
 import pandas as pd
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 from linebot import (
     LineBotApi, WebhookHandler
 )
