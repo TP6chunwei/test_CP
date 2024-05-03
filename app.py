@@ -2,6 +2,7 @@ from flask import Flask, request, abort
 import os
 import requests
 import json
+import matplotlib.pyplot as plt
 from linebot import (
     LineBotApi, WebhookHandler
 )
