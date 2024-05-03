@@ -2,7 +2,6 @@ from flask import Flask, request, abort
 import os
 import requests
 import json
-import pandas as pd
 from linebot import (
     LineBotApi, WebhookHandler
 )
