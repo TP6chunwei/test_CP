@@ -3,4 +3,3 @@ flask
 gunicorn
 pandas
 matplotlib
-matplotlib.pyplot
