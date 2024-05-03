@@ -293,17 +293,6 @@ def reply_weather_image(reply_token):
 #     except Exception as e:
 #         return e
 
-# Route for handling webhook callback
-@app.route("/callback", methods=['POST'])
-def callback():
-    signature = request.headers['X-Line-Signature']
-    body = request.get_data(as_text=True)
-    app.logger.info("Request body: " + body)
-    try:
-        handler.handle(body, signature)
-    except InvalidSignatureError:
-        abort(400)
-    return 'OK'
 
 # Message handling
 @handler.add(MessageEvent, message=[TextMessage, LocationMessage])
