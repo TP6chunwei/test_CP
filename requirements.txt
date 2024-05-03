@@ -4,3 +4,4 @@ openai < 1.0.0
 gunicorn
 pandas
 matplotlib
+matplotlib.pyplot
