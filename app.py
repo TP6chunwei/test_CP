@@ -1,12 +1,7 @@
 from flask import Flask, request, abort
-import requests
-import statistics
 import os
-# from bs4 import BeautifulSoup
+import requests
 import json
-import pandas as pd
-import matplotlib.pyplot as plt
-from prettytable import PrettyTable 
 from linebot import (
     LineBotApi, WebhookHandler
 )
@@ -17,6 +12,7 @@ from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage, ImageSendMessage,
     PostbackEvent, MemberJoinedEvent, LocationMessage
 )
+
 
 app = Flask(__name__)
 
