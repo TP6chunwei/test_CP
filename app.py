@@ -298,6 +298,251 @@ def reply_weather_image(reply_token):
 #     except Exception as e:
 #         return e
 
+## 成本效益
+def fetch_vegetable_prices():
+    url = 'https://www.twfood.cc/topic/vege/%E6%B0%B4%E7%94%9F%E9%A1%9E'  # 替換成目標頁面的URL
+    response = requests.get(url)
+    soup = BeautifulSoup(response.content, 'html.parser')
+
+    # 初始化空列表來存儲爬取的數據
+    data = []
+
+    # 根據HTML結構尋找每個蔬菜的信息區塊
+    vege_blocks = soup.find_all('div', class_='vege_price')
+
+    for block in vege_blocks:
+      name = block.find('h4').text.strip()
+      prices = block.find_all('span', class_='text-price')
+      retail_price = prices[-4].text.strip() if len(prices) > 1 else 'N/A'
+      # 將每條數據作為列表添加到data中
+      data.append([name, retail_price])
+
+      # 將數據轉換為pandas DataFrame
+    df = pd.DataFrame(data, columns=['品項', '本週平均批發價(元/公斤)'])
+    return df
+
+df_vege_prices = fetch_vegetable_prices()
+
+
+    # 可選：將DataFrame保存為CSV文件
+df_vege_prices.to_csv('vege_prices.csv', index=False)
+
+def fetch_vegetable_prices():
+    url = 'https://www.twfood.cc/topic/vege/%E6%9E%9C%E9%A1%9E'  # 替換成目標頁面的URL
+    response = requests.get(url)
+    soup = BeautifulSoup(response.content, 'html.parser')
+
+    # 初始化空列表來存儲爬取的數據
+    data = []
+
+    # 根據HTML結構尋找每個蔬菜的信息區塊
+    vege_blocks = soup.find_all('div', class_='vege_price')
+
+    for block in vege_blocks:
+        name = block.find('h4').text.strip()
+        prices = block.find_all('span', class_='text-price')
+        retail_price = prices[-4].text.strip() if len(prices) > 1 else 'N/A'
+        # 將每條數據作為列表添加到data中
+        data.append([name, retail_price])
+
+    # 將數據轉換為pandas DataFrame
+    df2 = pd.DataFrame(data, columns=['品項', '預估零售價(元/公斤)'])
+    return df2
+
+df2_vege_prices = fetch_vegetable_prices()
+
+
+# 可選：將DataFrame保存為CSV文件
+df2_vege_prices.to_csv('vege_prices.csv', index=False)
+
+def fetch_vegetable_prices():
+    url = 'https://www.twfood.cc/topic/vege/%E8%91%89%E8%8F%9C%E9%A1%9E'  # 替換成目標頁面的URL
+    response = requests.get(url)
+    soup = BeautifulSoup(response.content, 'html.parser')
+    data = []
+    # 根據HTML結構尋找每個蔬菜的信息區塊
+    vege_blocks = soup.find_all('div', class_='vege_price')
+
+    for block in vege_blocks:
+        name = block.find('h4').text.strip()
+        prices = block.find_all('span', class_='text-price')
+        retail_price = prices[-4].text.strip() if len(prices) > 1 else 'N/A'
+        data.append([name, retail_price])
+
+# 將數據轉換為pandas DataFrame
+    df3 = pd.DataFrame(data, columns=['品項', '預估零售價(元/公斤)'])
+    return df3
+
+df3_vege_prices = fetch_vegetable_prices()
+
+
+# 可選：將DataFrame保存為CSV文件
+df3_vege_prices.to_csv('vege_prices.csv', index=False)
+
+vegetable = input("請輸入菜的名稱: ")
+fetilizer_amt = float(input('請輸入肥料添加量(以公斤為單位):'))
+olivine_amt = float(input('請輸入橄欖砂添加量(以公斤為單位):'))
+
+
+if vegetable == '空心菜':  ##(1500)
+  #cost
+  ## 農業部的成本表
+  seed_cost = 45453
+  fertiliser = (fetilizer_amt/20)*290
+  wage = 150951
+  pesticides = 2652
+  machine = 9150
+  olivine_price = 20000*olivine_amt/1000
+  total_cost = (seed_cost + fertiliser + wage + pesticides + machine + olivine_price)
+  total_cost_ex = (seed_cost + fertiliser + wage + pesticides + machine)
+  vege_type = df_vege_prices['品項'][0]
+  price = float(df_vege_prices['本週平均批發價(元/公斤)'][0]) ##當季好蔬菜
+  dry_mass_kgha_fer = 223.0708 + (0.1177986796)*0 + (0.8516414171)*fetilizer_amt + (-0.0000007937)*(0**2) + (-0.0000134670)*0*fetilizer_amt + (-0.0000354190)*(fetilizer_amt**2)
+  veg_total_price_ex = price * dry_mass_kgha_fer * 3
+  #veg_total_price_ex = 476883
+  net_profit_ex = veg_total_price_ex - total_cost_ex
+  #profit
+
+  vege_type = df_vege_prices['品項'][0]
+  price = float(df_vege_prices['本週平均批發價(元/公斤)'][0]) ##當季好蔬菜
+  if olivine_amt ==0:
+    coef = 1
+  else :
+    coef = 1.5
+  dry_mass_kgha = 223.0708 + (0.1177986796)*olivine_amt + (0.8516414171)*fetilizer_amt + (-0.0000007937)*(olivine_amt**2) + (-0.0000134670)*olivine_amt*fetilizer_amt + (-0.0000354190)*(fetilizer_amt**2)
+  veg_total_price = price * dry_mass_kgha * coef * 3 * 0.75  # (convert dry mass to mass : 5-10倍) # (crop density conversion : 3 from 農業部) ## (1.5是代表dry mass上升2倍但wet mass上升1.5倍)
+  carbon_sequestered = 0.0000028176 + 0.06567886979596845864 * olivine_amt + -0.00000032024927921929 * olivine_amt**2 + 0.00000000000057864824 * olivine_amt**3
+  carbon_price = carbon_sequestered/1000 * 65*40*3
+  total_profit = veg_total_price + carbon_price
+  net_profit = total_profit - total_cost
+
+  # Create a PrettyTable object with column headers
+  myTable = PrettyTable(['項目',"只有添加肥料", "有添加肥料及橄欖砂"])
+
+  # Add rows
+  myTable.add_row(["種苗費", f"{seed_cost:.2f}", f"{seed_cost:.2f}"])
+  myTable.add_row(["肥料費", f"{fertiliser:.2f}", f"{fertiliser:.2f}"])
+  myTable.add_row(["人工費", f"{wage:.2f}", f"{wage:.2f}"])
+  myTable.add_row(["農藥", f"{pesticides:.2f}", f"{pesticides:.2f}"])
+  myTable.add_row(["機械包工費", f"{machine:.2f}", f"{machine:.2f}"])
+  myTable.add_row(["橄欖砂價格", "0.00", f"{olivine_price:.2f}"])
+  myTable.add_row(["總共成本", f"{total_cost_ex:.2f}", f"{total_cost:.2f}"])
+  myTable.add_row(["空心菜平均批發價", f"{veg_total_price_ex:.2f}", f"{veg_total_price:.2f}"])
+  myTable.add_row(["碳權價格", "0.00", f"{carbon_price:.2f}"])
+  myTable.add_row(["總收益", f"{veg_total_price_ex:.2f}", f"{total_profit:.2f}"])
+  myTable.add_row(["淨收益", f"{net_profit_ex:.2f}", f"{net_profit:.2f}"])
+  print(myTable)
+
+elif vegetable == '高麗菜':     ## vege type要換  ## crop density ## carbon sequestration統一  ## 3000kg
+  #cost
+  ## 農業部的成本表
+  seed_cost = 28554
+  fertiliser = (fetilizer_amt)/40*430 ## 39號基肥
+  wage = 102328
+  pesticides = 67584
+  machine = 17552
+  olivine_price = 20000*olivine_amt/1000
+  total_cost = (seed_cost + fertiliser + wage + pesticides + machine + olivine_price)
+  total_cost_ex = (seed_cost + fertiliser + wage + pesticides + machine)
+  dry_mass_kgha_fer = 20000 + (3.7111228258)*0 + (0.1075826138)*fetilizer_amt + (-0.0000613036)*0*fetilizer_amt + (0.0002370665)*0**2 + (0.0051245589)*fetilizer_amt**2
+  vege_type = df3_vege_prices['品項'][22]
+  price = float(df3_vege_prices['預估零售價(元/公斤)'][22]) ##當季好蔬菜
+  veg_total_price_ex = price * dry_mass_kgha_fer    # (convert dry mass to mass : 5-10倍) # (crop density conversion : 3 from 農業部) ## (1.5是代表dry mass上升2倍但wet mass上升1.5倍)
+  #veg_total_price_ex = 639815
+  net_profit_ex = veg_total_price_ex - total_cost_ex
+  #profit
+
+  vege_type = df3_vege_prices['品項'][22]
+  price = float(df3_vege_prices['預估零售價(元/公斤)'][22]) ##當季好蔬菜
+
+
+  if olivine_amt ==0:
+    coef = 1
+    mul = 1
+  else :
+    coef = 1.5
+    mul = 0.7
+    # 47930.3124
+  dry_mass_kgha = 20000 + (3.7111228258)*olivine_amt + (0.1075826138)*fetilizer_amt + (-0.0000613036)*olivine_amt*fetilizer_amt + (0.0002370665)*olivine_amt**2 + (0.0051245589)*fetilizer_amt**2
+  veg_total_price = price * dry_mass_kgha * coef * mul   # (convert dry mass to mass : 5-10倍) # (crop density conversion : 3 from 農業部) ## (1.5是代表dry mass上升2倍但wet mass上升1.5倍)
+  carbon_sequestered = 0.0000028176 + 0.06567886979596845864 * olivine_amt + -0.00000032024927921929 * olivine_amt**2 + 0.00000000000057864824 * olivine_amt**3
+  carbon_price = carbon_sequestered/1000 * 65*120
+  total_profit = veg_total_price + carbon_price
+  net_profit = total_profit - total_cost
+  print(price)
+  print(dry_mass_kgha)
+  # Create a PrettyTable object with column headers
+  myTable = PrettyTable(['項目',"只有添加肥料", "有添加肥料及橄欖砂"])
+  # Add rows
+  myTable.add_row(["種苗費", f"{seed_cost:.2f}", f"{seed_cost:.2f}"])
+  myTable.add_row(["肥料費", f"{fertiliser:.2f}", f"{fertiliser:.2f}"])
+  myTable.add_row(["人工費", f"{wage:.2f}", f"{wage:.2f}"])
+  myTable.add_row(["農藥", f"{pesticides:.2f}", f"{pesticides:.2f}"])
+  myTable.add_row(["機械包工費", f"{machine:.2f}", f"{machine:.2f}"])
+  myTable.add_row(["橄欖砂價格", "0.00", f"{olivine_price:.2f}"])
+  myTable.add_row(["總共成本", f"{total_cost_ex:.2f}", f"{total_cost:.2f}"])
+  myTable.add_row(["高麗菜平均批發價", f"{veg_total_price_ex:.2f}", f"{veg_total_price:.2f}"])
+  myTable.add_row(["碳權價格", "0.00", f"{carbon_price:.2f}"])
+  myTable.add_row(["總收益", f"{veg_total_price_ex:.2f}", f"{total_profit:.2f}"])
+  myTable.add_row(["淨收益", f"{net_profit_ex:.2f}", f"{net_profit:.2f}"])
+  print(myTable)
+
+elif vegetable == '花椰菜':     ## vege type要換  ## crop density ##carbon sequestration統一
+  #cost
+  ## 農業部的成本表
+  seed_cost = 25254
+  fertiliser = (fetilizer_amt)*410/12 ## 黑汪特5號 理應是100kg/分地 1公頃是10.3102分地 所以要下1031公斤
+  wage = 111631
+  pesticides = 45635
+  machine = 16603
+  olivine_price = 20000*olivine_amt/1000
+  total_cost = (seed_cost + fertiliser + wage + pesticides + machine + olivine_price)
+  total_cost_ex = (seed_cost + fertiliser + wage + pesticides + machine)
+  dry_mass_kgha_fer = 20800 + (0.9833521087)*0 + (6.3069281943)*fetilizer_amt + (-0.0000055883)*0**2 + (-0.0000800838)*0*fetilizer_amt + (-0.0002548038)*fetilizer_amt**2
+  vege_type = df2_vege_prices['品項'][5] ##要換成花椰菜
+  price = float(df2_vege_prices['預估零售價(元/公斤)'][5]) ##當季好蔬菜
+  veg_total_price_ex = price * dry_mass_kgha_fer
+  #veg_total_price_ex = 786233
+  net_profit_ex = veg_total_price_ex - total_cost_ex
+  #profit
+
+  vege_type = df2_vege_prices['品項'][5] ##要換成花椰菜
+  price = float(df2_vege_prices['預估零售價(元/公斤)'][5]) ##當季好蔬菜
+  if olivine_amt ==0:
+    coef = 1
+    mul = 1
+  else :
+    coef = 1.5
+    mul = 0.8
+  #29591.1825
+  dry_mass_kgha = 20800 + (0.9833521087)*olivine_amt + (6.3069281943)*fetilizer_amt + (-0.0000055883)*olivine_amt**2 + (-0.0000800838)*olivine_amt*fetilizer_amt + (-0.0002548038)*fetilizer_amt**2
+  veg_total_price = price * dry_mass_kgha * coef * mul  # (convert dry mass to mass : 5-10倍) # (crop density conversion : 3 from 農業部) ## (1.5是代表dry mass上升2倍但wet mass上升1.5倍)
+  carbon_sequestered = 0.0000028176 + 0.06567886979596845864 * olivine_amt + -0.00000032024927921929 * olivine_amt**2 + 0.00000000000057864824 * olivine_amt**3
+  carbon_price = carbon_sequestered/1000 *65*120
+  total_profit = veg_total_price + carbon_price
+  net_profit = total_profit - total_cost
+
+  # Create a PrettyTable object with column headers
+  myTable = PrettyTable(['項目',"只有添加肥料", "有添加肥料及橄欖砂"])
+
+  # Add rows
+  myTable.add_row(["種苗費", f"{seed_cost:.2f}", f"{seed_cost:.2f}"])
+  myTable.add_row(["肥料費", f"{fertiliser:.2f}", f"{fertiliser:.2f}"])
+  myTable.add_row(["人工費", f"{wage:.2f}", f"{wage:.2f}"])
+  myTable.add_row(["農藥", f"{pesticides:.2f}", f"{pesticides:.2f}"])
+  myTable.add_row(["機械包工費", f"{machine:.2f}", f"{machine:.2f}"])
+  myTable.add_row(["橄欖砂價格", "0.00", f"{olivine_price:.2f}"])
+  myTable.add_row(["總共成本", f"{total_cost_ex:.2f}", f"{total_cost:.2f}"])
+  myTable.add_row(["花椰菜平均批發價", f"{veg_total_price_ex:.2f}", f"{veg_total_price:.2f}"])
+  myTable.add_row(["碳權價格(月)", "0.00", f"{carbon_price:.2f}"])
+  myTable.add_row(["總收益", f"{veg_total_price_ex:.2f}", f"{total_profit:.2f}"])
+  myTable.add_row(["淨收益", f"{net_profit_ex:.2f}", f"{net_profit:.2f}"])
+  print(myTable)
+
+else:
+  print("找不到此菜種的資料")
+
+
 
 # Message handling
 @handler.add(MessageEvent, message=[TextMessage, LocationMessage])
