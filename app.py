@@ -379,7 +379,7 @@ df3_vege_prices = fetch_vegetable_prices()
 # 可選：將DataFrame保存為CSV文件
 df3_vege_prices.to_csv('vege_prices.csv', index=False)
 
-vegetable = input("請輸入菜的名稱: ")
+vegetable = input("請輸入農產品的名稱:")
 fetilizer_amt = float(input('請輸入肥料添加量(以公斤為單位):'))
 olivine_amt = float(input('請輸入橄欖砂添加量(以公斤為單位):'))
 
