@@ -3,3 +3,5 @@ flask
 gunicorn
 pandas
 matplotlib
+bs4
+prettytable
