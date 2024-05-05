@@ -393,7 +393,7 @@ def handle_message(event):
                     olivine_amount = inputs[2].strip()
                 if crop_type in ['空心菜', '高麗菜', '花椰菜']:
                     if crop_tpye == '空心菜':
-                        water_spanish(event.reply_token, message)
+                        water_spanish(event.reply_token)
                 else:
                     msg = '請輸入有效的農產品種類（空心菜、高麗菜、花椰菜）'
                     message = TextSendMessage(text=msg)
