@@ -5,3 +5,4 @@ pandas
 matplotlib
 bs4
 prettytable
+input
