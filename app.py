@@ -299,7 +299,9 @@ def reply_weather_image(reply_token):
 #         return e
 
 ## 成本效益
-def water_spanish():
+def water_spanish(reply_token):
+    fetilizer_amt = float(reply_token[1])
+    olivine_amt = float(reply_token[2])
     url = 'https://www.twfood.cc/topic/vege/%E6%B0%B4%E7%94%9F%E9%A1%9E'  # 替換成目標頁面的URL
     response = requests.get(url)
     soup = BeautifulSoup(response.content, 'html.parser')
@@ -403,8 +405,7 @@ def handle_message(event):
                 message = TextSendMessage(text=msg)
                 line_bot_api.reply_message(event.reply_token, message)
 
-            
-            reply_cost_and_effect(event.reply_token)
+
         else:
             message = TextSendMessage(text=msg)
             line_bot_api.reply_message(event.reply_token, message)
