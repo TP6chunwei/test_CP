@@ -14,7 +14,8 @@ from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage, ImageSendMessage,
     PostbackEvent, MemberJoinedEvent, LocationMessage
 )
-
+from bs4 import BeautifulSoup
+from prettytable import PrettyTable
 
 app = Flask(__name__)
 
