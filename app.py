@@ -58,7 +58,7 @@ def current_weather(address):
             town = i['GeoInfo']['TownName'] # 行政區
             prec = check_data(i['WeatherElement']['Now']['Precipitation']) # 即時降雨量
             airtemp = check_data(i['WeatherElement']['AirTemperature']) # 氣溫
-            humd = check_data(i['WeatherElement']['AirTemperature']) # 相對溼度
+            humd = check_data(i['WeatherElement']['RelativeHumidity']) # 相對溼度
             dailyhigh = check_data(i['WeatherElement']['DailyExtreme']['DailyHigh']['TemperatureInfo']['AirTemperature']) # 當日最高溫
             dailylow = check_data(i['WeatherElement']['DailyExtreme']['DailyLow']['TemperatureInfo']['AirTemperature']) # 當日最低溫
             if town not in town_list:
