@@ -384,31 +384,31 @@ def handle_message(event):
         if msg in ['溫度分布', '溫度分布圖', '溫度分佈', '溫度分佈圖']:
             reply_temperature_image(event.reply_token)
         if msg == '成本效益':
-            msg = f'請輸入農產品的種類，添加肥料量以及橄欖石的量(以公斤為單位)'
-            message = TextSendMessage(text=msg)
+            msg2 = f'請輸入農產品的種類，添加肥料量以及橄欖石的量(以公斤為單位)'
+            message = TextSendMessage(text=msg2)
             line_bot_api.reply_message(event.reply_token, message)
-            if ',' in message:
-                inputs = msg.split(',')
-                if len(inputs) == 3:
-                    crop_type = inputs[0].strip()
-                    fertilizer_amount = inputs[1].strip()
-                    olivine_amount = inputs[2].strip()
-                if crop_type in ['空心菜', '高麗菜', '花椰菜']:
-                    if crop_tpye == '空心菜':
-                        water_spanish(event.reply_token)
-                else:
-                    msg = '請輸入有效的農產品種類（空心菜、高麗菜、花椰菜）'
-                    message = TextSendMessage(text=msg)
-                    line_bot_api.reply_message(event.reply_token, message)
+        if ',' in message:
+            inputs = msg.split(',')
+            if len(inputs) == 3:
+                crop_type = inputs[0].strip()
+                fertilizer_amount = inputs[1].strip()
+                olivine_amount = inputs[2].strip()
+            if crop_type in ['空心菜', '高麗菜', '花椰菜']:
+                if crop_tpye == '空心菜':
+                    water_spanish(event.reply_token)
             else:
-                msg = '輸入格式錯誤，請確保輸入農產品的種類，肥料量和橄欖石的量，並以逗號分隔'
+                msg = '請輸入有效的農產品種類（空心菜、高麗菜、花椰菜）'
                 message = TextSendMessage(text=msg)
                 line_bot_api.reply_message(event.reply_token, message)
-
-
         else:
+            msg = '輸入格式錯誤，請確保輸入農產品的種類，肥料量和橄欖石的量，並以逗號分隔'
             message = TextSendMessage(text=msg)
             line_bot_api.reply_message(event.reply_token, message)
+
+
+    else:
+        message = TextSendMessage(text=msg)
+        line_bot_api.reply_message(event.reply_token, message)
 
 # Other events handling
 @handler.add(PostbackEvent)
