@@ -386,7 +386,7 @@ def handle_message(event):
         if msg == '成本效益':
             msg = f'請輸入農產品的種類，添加肥料量以及橄欖石的量(以公斤為單位)'
             message = TextSendMessage(text=msg)
-            line_bot_api.reply_message(event.reply_token, message)
+            #line_bot_api.reply_message(event.reply_token, message)
             if ',' in msg:
                 inputs = msg.split(',')
                 if len(inputs) == 3:
