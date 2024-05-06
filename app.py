@@ -215,90 +215,91 @@ def reply_weather_image(reply_token):
     except Exception as e:
         print(f"Error replying with weather image: {e}")
 
-# # 未來一週氣象預報
-# def weekly_weather_forecast_data():
-#     try:
-#         url = 'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-091?Authorization=CWA-371EFA85-E086-45AE-B068-E449E4478D6A&format=JSON'
-#         r = requests.get(url)
-#         # Parse
-#         data = pd.read_json(r.text)
-#         data = data.loc['locations', 'records']
-#         data = data[0]['location']
+# 未來一週氣象預報
+def weekly_weather_forecast_data():
+    try:
+        code = 'CWA-371EFA85-E086-45AE-B068-E449E4478D6A'
+        url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-091?Authorization={code}&format=JSON'
+        r = requests.get(url)
+        # Parse
+        data = pd.read_json(r.text)
+        data = data.loc['locations', 'records']
+        data = data[0]['location']
         
-#         aggregated_data = {
-#             'PoP12h': {}, # 未來12小時降雨機率
-#             'T': {}, # 平均溫度
-#             'MaxT': {}, # 最高溫度
-#             'MinT': {} # 最低溫度
-#         }
-#         element_lists = [i for i in aggregated_data.keys()]
-#         for loc_data in data:
-#             loc_name = loc_data['locationName'] # 縣市
-#             weather_data = loc_data['weatherElement'] # 項目
-#             for element in weather_data:
-#               ele_name = element['elementName']
-#               if ele_name in element_lists:
-#                 for entry in element['time']:
-#                   start_time = entry['startTime'][:10]  # Extract the date
-#                   value = entry['elementValue'][0]['value']
-#                   if value.strip():  # Check if value is not empty
-#                     value = float(value)
-#                   else:
-#                     value = 0.0
-#                   # Store the value for each location, weather element, and start time
-#                   if start_time not in aggregated_data[ele_name]:
-#                     aggregated_data[ele_name][start_time] = {}
-#                   if loc_name not in aggregated_data[ele_name][start_time]:
-#                     aggregated_data[ele_name][start_time][loc_name] = 0.0
-#                   aggregated_data[ele_name][start_time][loc_name] += value
+        aggregated_data = {
+            'PoP12h': {}, # 未來12小時降雨機率
+            'T': {}, # 平均溫度
+            'MaxT': {}, # 最高溫度
+            'MinT': {} # 最低溫度
+        }
+        element_lists = [i for i in aggregated_data.keys()]
+        for loc_data in data:
+            loc_name = loc_data['locationName'] # 縣市
+            weather_data = loc_data['weatherElement'] # 項目
+            for element in weather_data:
+              ele_name = element['elementName']
+              if ele_name in element_lists:
+                for entry in element['time']:
+                  start_time = entry['startTime'][:10]  # Extract the date
+                  value = entry['elementValue'][0]['value']
+                  if value.strip():  # Check if value is not empty
+                    value = float(value)
+                  else:
+                    value = 0.0
+                  # Store the value for each location, weather element, and start time
+                  if start_time not in aggregated_data[ele_name]:
+                    aggregated_data[ele_name][start_time] = {}
+                  if loc_name not in aggregated_data[ele_name][start_time]:
+                    aggregated_data[ele_name][start_time][loc_name] = 0.0
+                  aggregated_data[ele_name][start_time][loc_name] += value
                     
-#         # Divide each value by 2 after all values have been added
-#         for ele_name in aggregated_data:
-#             for start_time in aggregated_data[ele_name]:
-#               for loc_name in aggregated_data[ele_name][start_time]:
-#                 aggregated_data[ele_name][start_time][loc_name] /= 2   
+        # Divide each value by 2 after all values have been added
+        for ele_name in aggregated_data:
+            for start_time in aggregated_data[ele_name]:
+              for loc_name in aggregated_data[ele_name][start_time]:
+                aggregated_data[ele_name][start_time][loc_name] /= 2   
         
-#         return aggregated_data
+        return aggregated_data
 
-#     except Exception as e:
-#         print(e)
+    except Exception as e:
+        print(e)
 
-# def weekly_weather_forecast_image(weekly_weather_forecast_data(), address):
-#     try:
-#         bundles = {
-#             'PoP12h': [],
-#             'T': [],
-#             'MaxT': [],
-#             'MinT': []
-#         }
-#         date_lists = []
+def weekly_weather_forecast_image(weekly_weather_forecast_data(), address):
+    try:
+        bundles = {
+            'PoP12h': [],
+            'T': [],
+            'MaxT': [],
+            'MinT': []
+        }
+        date_lists = []
 
-#         for i in bundles.keys():
-#           for element, location_data in aggregated_data.items():
-#             if element == i:
-#               for date, info in location_data.items():
-#                 value = info[address]
-#                 bundles[element].append(value)
-#                 if date not in date_lists:
-#                   date_lists.append(date)
+        for i in bundles.keys():
+          for element, location_data in aggregated_data.items():
+            if element == i:
+              for date, info in location_data.items():
+                value = info[address]
+                bundles[element].append(value)
+                if date not in date_lists:
+                  date_lists.append(date)
 
-#         df = pd.DataFrame(bundles)
-#         df['Date'] = pd.to_datetime(date_lists)
-#         df.set_index('Date', inplace=True)
+        df = pd.DataFrame(bundles)
+        df['Date'] = pd.to_datetime(date_lists)
+        df.set_index('Date', inplace=True)
 
-#         # Plotting
-#         fig, axes = plt.subplots(nrows=2, ncols=1, figsize=(10, 8))
-#         df[['T', 'MaxT', 'MinT']].plot(ax = axes[0], title = 'Temperature Data', grid = True, color = ['orange', 'red', 'blue'])
-#         axes[0].set_ylabel('Temperature (°C)')
+        # Plotting
+        fig, axes = plt.subplots(nrows=2, ncols=1, figsize=(10, 8))
+        df[['T', 'MaxT', 'MinT']].plot(ax = axes[0], title = 'Temperature Data', grid = True, color = ['orange', 'red', 'blue'])
+        axes[0].set_ylabel('Temperature (°C)')
 
-#         df[['PoP12h']].plot(ax=axes[1], title='PoP12h Data', color='purple', grid=True, linewidth = 3)
-#         axes[1].set_ylabel('PoP12h (%)')
+        df[['PoP12h']].plot(ax=axes[1], title='PoP12h Data', color='purple', grid=True, linewidth = 3)
+        axes[1].set_ylabel('PoP12h (%)')
 
-#         plt.tight_layout()
-#         plt.show()
+        plt.tight_layout()
+        plt.show()
 
-#     except Exception as e:
-#         return e
+    except Exception as e:
+        return e
 
 ## 成本效益
 def water_spanish(reply_token):
