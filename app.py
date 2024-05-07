@@ -264,7 +264,7 @@ def weekly_weather_forecast_data():
     except Exception as e:
         print(e)
 
-def weekly_weather_forecast_image(weekly_weather_forecast_data(), address):
+def weekly_weather_forecast_image(aggregated_data, address):
     try:
         city = address[:3]
         bundles = {
