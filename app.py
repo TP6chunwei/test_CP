@@ -215,94 +215,123 @@ def reply_weather_image(reply_token):
     except Exception as e:
         print(f"Error replying with weather image: {e}")
 
-# # 未來一週氣象預報
-# def weekly_weather_forecast_data():
-#     try:
-#         code = 'CWA-371EFA85-E086-45AE-B068-E449E4478D6A'
-#         url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-091?Authorization={code}&format=JSON'
-#         r = requests.get(url)
-#         # Parse
-#         data = pd.read_json(r.text)
-#         data = data.loc['locations', 'records']
-#         data = data[0]['location']
+# 未來一週氣象預報
+def forecast_weather_data():
+    try:
+        code = 'CWA-371EFA85-E086-45AE-B068-E449E4478D6A'
+        url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-091?Authorization={code}&format=JSON'
+        r = requests.get(url)
+        # Parse
+        data = pd.read_json(r.text)
+        data = data.loc['locations', 'records']
+        data = data[0]['location']
         
-#         aggregated_data = {
-#             'PoP12h': {}, # 未來12小時降雨機率
-#             'T': {}, # 平均溫度
-#             'MaxT': {}, # 最高溫度
-#             'MinT': {} # 最低溫度
-#         }
-#         element_lists = [i for i in aggregated_data.keys()]
-#         for loc_data in data:
-#             loc_name = loc_data['locationName'] # 縣市
-#             weather_data = loc_data['weatherElement'] # 項目
-#             for element in weather_data:
-#               ele_name = element['elementName']
-#               if ele_name in element_lists:
-#                 for entry in element['time']:
-#                   start_time = entry['startTime'][:10]  # Extract the date
-#                   value = entry['elementValue'][0]['value']
-#                   if value.strip():  # Check if value is not empty
-#                     value = float(value)
-#                   else:
-#                     value = 0.0
-#                   # Store the value for each location, weather element, and start time
-#                   if start_time not in aggregated_data[ele_name]:
-#                     aggregated_data[ele_name][start_time] = {}
-#                   if loc_name not in aggregated_data[ele_name][start_time]:
-#                     aggregated_data[ele_name][start_time][loc_name] = 0.0
-#                   aggregated_data[ele_name][start_time][loc_name] += value
+        aggregated_data = {
+            'PoP12h': {}, # 未來12小時降雨機率
+            'T': {}, # 平均溫度
+            'MaxT': {}, # 最高溫度
+            'MinT': {} # 最低溫度
+        }
+        element_lists = [i for i in aggregated_data.keys()]
+        for loc_data in data:
+            loc_name = loc_data['locationName'] # 縣市
+            weather_data = loc_data['weatherElement'] # 項目
+            for element in weather_data:
+              ele_name = element['elementName']
+              if ele_name in element_lists:
+                for entry in element['time']:
+                  start_time = entry['startTime'][:10]  # Extract the date
+                  value = entry['elementValue'][0]['value']
+                  if value.strip():  # Check if value is not empty
+                    value = float(value)
+                  else:
+                    value = 0.0
+                  # Store the value for each location, weather element, and start time
+                  if start_time not in aggregated_data[ele_name]:
+                    aggregated_data[ele_name][start_time] = {}
+                  if loc_name not in aggregated_data[ele_name][start_time]:
+                    aggregated_data[ele_name][start_time][loc_name] = 0.0
+                  aggregated_data[ele_name][start_time][loc_name] += value
                     
-#         # Divide each value by 2 after all values have been added
-#         for ele_name in aggregated_data:
-#             for start_time in aggregated_data[ele_name]:
-#               for loc_name in aggregated_data[ele_name][start_time]:
-#                 aggregated_data[ele_name][start_time][loc_name] /= 2   
+        # Divide each value by 2 after all values have been added
+        for ele_name in aggregated_data:
+            for start_time in aggregated_data[ele_name]:
+              for loc_name in aggregated_data[ele_name][start_time]:
+                aggregated_data[ele_name][start_time][loc_name] /= 2   
         
-#         return aggregated_data
+        return aggregated_data
 
-#     except Exception as e:
-#         print(e)
+    except Exception as e:
+        print(e)
 
-# def weekly_weather_forecast_image(aggregated_data, address):
-#     try:
-#         city = address[:3]
-#         bundles = {
-#             'PoP12h': [],
-#             'T': [],
-#             'MaxT': [],
-#             'MinT': []
-#         }
-#         date_lists = []
+def forecast_weather_description(aggregated_data, address):
+  try:
+    city = address[:3]
+    bundles = {
+        'PoP12h': [],
+        'T': [],
+        'MaxT': [],
+        'MinT': []
+    }
+    date_lists = []
 
-#         for i in bundles.keys():
-#           for element, location_data in aggregated_data.items():
-#             if element == i:
-#               for date, info in location_data.items():
-#                 value = info[city]
-#                 bundles[element].append(value)
-#                 if date not in date_lists:
-#                   date_lists.append(date)
+    for i in bundles.keys():
+      for element, location_data in aggregated_data.items():
+        if element == i:
+          for date, info in location_data.items():
+            value = info[city]
+            bundles[element].append(value)
+            if date not in date_lists:
+              date_lists.append(date)
 
-#         df = pd.DataFrame(bundles)
-#         df['Date'] = pd.to_datetime(date_lists)
-#         df.set_index('Date', inplace=True)
+    df = pd.DataFrame(bundles)
+    df['Date'] = pd.to_datetime(date_lists)
+    df.set_index('Date', inplace=True)
 
-#         # Plotting
-#         fig, axes = plt.subplots(nrows=2, ncols=1, figsize=(10, 8))
-#         df[['T', 'MaxT', 'MinT']].plot(ax = axes[0], title = 'Temperature Data', grid = True, color = ['orange', 'red', 'blue'])
-#         axes[0].set_ylabel('Temperature (°C)')
+    # Find the max value for PoP12h
+    pop_max = df['PoP12h'].max()
+    pop_maxidx = df['PoP12h'].idxmax()
+    # Extract Unix timestamp from the timestamp object
+    pop_maxidx_unix = pop_maxidx.timestamp()
+    # Now convert to datetime
+    pop_maxidx_dt = datetime.fromtimestamp(pop_maxidx_unix)
+    pop_month = pop_maxidx_dt.month
+    pop_date = pop_maxidx_dt.day
+    pop_message = f'{pop_month}/{pop_date}達{pop_max}%'
 
-#         df[['PoP12h']].plot(ax=axes[1], title='PoP12h Data', color='purple', grid=True, linewidth = 3)
-#         axes[1].set_ylabel('PoP12h (%)')
+    # Find the max value for MaxT
+    T_max = df['MaxT'].max()
+    T_maxidx = df['MaxT'].idxmax()
+    T_maxidx_unix = T_maxidx.timestamp()
+    T_maxidx_dt = datetime.fromtimestamp(T_maxidx_unix)
+    maxT_month = T_maxidx_dt.month
+    maxT_date = T_maxidx_dt.day
+    # Using Unicode character for Celsius symbol
+    celsius_symbol = '\u00B0C'
+    maxT_message = f'{maxT_month}/{maxT_date}達{T_max}{celsius_symbol}，'
 
-#         return city
+    # Find the minimum value for MinT
+    T_min = df['MinT'].min()
+    T_minidx = df['MinT'].idxmin()
+    T_minidx_unix = T_minidx.timestamp()
+    T_minidx_dt = datetime.fromtimestamp(T_minidx_unix)
+    minT_month = T_minidx_dt.month
+    minT_date = T_minidx_dt.day
+    minT_message = f'{minT_month}/{minT_date}達{T_min}{celsius_symbol}，'
 
-#     except Exception as e:
-#         return e
+    # Calculate for average temperature
+    ave_t = round(df['T'].mean(), 2)
+    ave_message = f'{ave_t}{celsius_symbol}，'
+
+    description = f'未來一週氣象預測:\n平均氣溫{ave_message}最高溫預計發生於{maxT_message}最低溫預計發生於{minT_message}最高降雨機率預計發生於{pop_message}'.strip('，')
+    return description
+
+  except Exception as e:
+    return e
+    
 
 # 過去一個月的氣象資訊
-def past_weather_data(address):
+def past_weather(address):
   try:
     city = address[:2]
     authorize_code = 'CWA-371EFA85-E086-45AE-B068-E449E4478D6A'
@@ -340,7 +369,7 @@ def past_weather_data(address):
       airtemp_message = f'{weather_dict[city]["AirTemperature"]}{celsius_symbol}，'
       precp_message = f'{weather_dict[city]["Precipitation"]}mm'
 
-      description = f'過往一個月的平均氣溫為{airtemp_message}累積降雨量為{precp_message}'.strip('，')
+      description = f'過往一個月氣象資訊:\n平均氣溫{airtemp_message}累積降雨量{precp_message}'.strip('，')
       return description
     else:
       print('非常抱歉，您輸入的地址未提供過往一個月的氣象資訊。')
@@ -452,7 +481,7 @@ def water_spanish(reply_token):
 def handle_message(event):
     if event.message.type == 'location':
         address = event.message.address.replace('台', '臺')
-        msg = f'{address}\n\n{current_weather(address)}\n\n{forecast(address)}\n\n{warning(address)}\n\n{past_weather_data(address)}'
+        msg = f'{address}\n\n{past_weather_data(address)}\n\n{current_weather(address)}\n\n{warning(address)}\n\n{forecast_weather_description(forecast_weather_data(), address)}'
         message = TextSendMessage(text=msg)
         line_bot_api.reply_message(event.reply_token, message)    
     elif  event.message.type == 'text':
