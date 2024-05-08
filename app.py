@@ -323,7 +323,29 @@ def forecast_weather_description(aggregated_data, address):
     ave_t = round(df['T'].mean(), 2)
     ave_message = f'{ave_t}{celsius_symbol}，'
 
-    description = f'未來一週氣象預測:\n平均氣溫{ave_message}最高溫預計發生於{maxT_message}最低溫預計發生於{minT_message}最高降雨機率預計發生於{pop_message}'.strip('，')
+    # suggestion
+    if ave_t >= 25.0 and (df['PoP12h'] >= 60).any():
+        advice = '未來一週高溫且多雨，請注意熱害與排水'
+    elif ave_t >= 25.0 and ((df['PoP12h'] < 60) & (df['PoP12h'] >= 30)).any():
+        advice = '未來一週高溫且多雨，請注意熱害'
+    elif ave_t >= 25.0 and (df['PoP12h'] <= 30).all():
+        advice = '未來一週高溫而少雨，請注意熱害與灌溉'
+
+    elif 15 <= ave_t < 25 and (df['PoP12h'] >= 60).any():
+        advice = '未來一週溫度適中而多雨，請注意排水'
+    elif 15 <= ave_t < 25 and ((df['PoP12h'] < 60) & (df['PoP12h'] >= 30)).any():
+        advice = '未來一週溫度、雨量適中'
+    elif 15 <= ave_t < 25 and (df['PoP12h'] <= 30).all():
+        advice = '未來一週溫度適中而少雨，請注意灌溉'
+
+    elif ave_t < 15 and (df['PoP12h'] >= 60).any():
+        advice = '未來一週低溫且多雨，請注意寒害與排水'
+    elif ave_t < 15 and ((df['PoP12h'] < 60) & (df['PoP12h'] >= 30)).any():
+        advice = '未來一週低溫而雨量適中，請注意寒害'
+    elif ave_t < 15 and (df['PoP12h'] <= 30).all():
+        advice = '未來一週低溫而少雨，請注意寒害與灌溉'
+
+    description = f'未來一週氣象預測:\n平均氣溫{ave_message}最高溫預計發生於{maxT_message}最低溫預計發生於{minT_message}最高降雨機率預計發生於{pop_message}\n{advice}'.strip('，')
     return description
 
   except Exception as e:
