@@ -86,7 +86,7 @@ def current_weather(address):
                 airtemp = f"氣溫 {loc[i]['airtemp']} 度，" if loc[i]['airtemp'] != False else ''
                 humd = f"相對濕度 {loc[i]['humd']}%，" if loc[i]['humd'] != False else ''
                 prec = f"累積雨量 {loc[i]['prec']}mm" if loc[i]['prec'] != False else ''
-                description = f'{airtemp}{humd}{prec}'.strip('，')
+                description = f'即時氣象資訊:\n{airtemp}{humd}{prec}'.strip('，')
                 a = f'{description}。' # 取出 key 的內容作為回傳訊息使用
                 break
         return a
