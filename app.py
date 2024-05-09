@@ -266,7 +266,7 @@ def forecast_weather_data():
 
 def forecast_weather_description(aggregated_data, address):
   try:
-    city = address[:3]
+    city = address[5:8]
     bundles = {
         'PoP12h': [],
         'T': [],
@@ -355,7 +355,7 @@ def forecast_weather_description(aggregated_data, address):
 # 過去一個月的氣象資訊
 def past_weather(address):
   try:
-    city = address[:2]
+    city = address[5:7]
     authorize_code = 'CWA-371EFA85-E086-45AE-B068-E449E4478D6A'
     url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/C-B0027-001?Authorization={authorize_code}&format=JSON&weatherElement=AirTemperature,Precipitation&Month=4'
     r = requests.get(url)
