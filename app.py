@@ -7,6 +7,7 @@ import json
 import pandas as pd
 import matplotlib.pyplot as plt
 import statistics
+from datetime import datetime
 from linebot import (
     LineBotApi, WebhookHandler
 )
