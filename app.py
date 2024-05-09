@@ -401,7 +401,7 @@ def past_weather(address):
 def water_spanish(reply_token):
     msg = 'OK'
     message = TextSendMessage(text=msg)
-    line_bot_api.reply_message(event.reply_token, message)
+    line_bot_api.reply_message(event.reply_token,message)
     #fetilizer_amt = float(reply_token[1])
     #olivine_amt = float(reply_token[2])
     #url = 'https://www.twfood.cc/topic/vege/%E6%B0%B4%E7%94%9F%E9%A1%9E'  # 替換成目標頁面的URL
@@ -527,7 +527,7 @@ def handle_message(event):
                 olivine_amount = inputs[2].strip()
                 if crop_type in ['空心菜', '高麗菜', '花椰菜']:
                     if crop_type == '空心菜':
-                        water_spanish(event.reply_token,message)
+                        water_spanish(event.reply_token)
                 else:
                     msg = '請輸入有效的農產品種類（空心菜、高麗菜、花椰菜），並且確保輸入格式正確，格式為農產品的種類，肥料量和橄欖石的量，並以逗號分隔'
                     message = TextSendMessage(text=msg)
