@@ -268,7 +268,7 @@ def forecast_weather_data():
 def forecast_weather_description(aggregated_data, address):
   try:
     city = address[:3]
-    bundles = 
+    bundles = {
         'PoP12h': [],
         'T': [],
         'MaxT': [],
