@@ -1,4 +1,5 @@
 from flask import Flask, request, abort
+from datetime import datetime
 import os
 import os
 import numpy as np
@@ -7,7 +8,6 @@ import json
 import pandas as pd
 import matplotlib.pyplot as plt
 import statistics
-from datetime import datetime
 from linebot import (
     LineBotApi, WebhookHandler
 )
