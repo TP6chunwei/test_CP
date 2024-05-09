@@ -527,7 +527,7 @@ def handle_message(event):
                 fertilizer_amount = inputs[1].strip()
                 olivine_amount = inputs[2].strip()
                 if crop_type in ['空心菜', '高麗菜', '花椰菜']:
-                    if crop_type == '空心菜'
+                    if crop_type == '空心菜':
                         msg = 'success'
                         message = TextSendMessage(text=msg)
                         line_bot_api.reply_message(event.reply_token, message)
