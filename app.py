@@ -349,7 +349,7 @@ def forecast_weather_description(aggregated_data, address):
         advice = '未來一週低溫而少雨，請注意寒害與灌溉'
 
     description = f'未來一週氣象預測:\n平均氣溫{ave_message}最高溫預計發生於{maxT_message}最低溫預計發生於{minT_message}最高降雨機率預計發生於{pop_message}\n{advice}'.strip('，')
-    return city
+    return description
 
   except Exception as e:
     return e
