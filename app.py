@@ -43,7 +43,7 @@ def callback():
         abort(400)
     return 'OK'
     
-# Weather functions
+# 目前天氣資訊
 def current_weather(address):
     city_list, town_list, town_list2 = {}, {}, {}
     msg = '找不到氣象資訊。'
@@ -503,7 +503,7 @@ def water_spanish(reply_token):
 def handle_message(event):
     if event.message.type == 'location':
         address = event.message.address.replace('台', '臺')
-        msg = f'{address}\n\n{past_weather_data(address)}\n\n{current_weather(address)}\n\n{warning(address)}\n\n{forecast_weather_description(forecast_weather_data(), address)}'
+        msg = f'{address}\n\n\n\n{current_weather(address)}\n\n{warning(address)}\n\n{forecast_weather_description(forecast_weather_data(), address)}'
         message = TextSendMessage(text=msg)
         line_bot_api.reply_message(event.reply_token, message)    
     elif  event.message.type == 'text':
