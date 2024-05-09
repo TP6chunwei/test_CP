@@ -399,8 +399,8 @@ def past_weather(address):
     return e
 
 ## 成本效益
-def water_spanish():
-    msg = 'OK'
+def water_spanish(olivine_amount):
+    msg = olivine_amount
     return msg
     #fetilizer_amt = float(reply_token[1])
     #olivine_amt = float(reply_token[2])
@@ -527,7 +527,7 @@ def handle_message(event):
                 olivine_amount = inputs[2].strip()
                 if crop_type in ['空心菜', '高麗菜', '花椰菜']:
                     if crop_type == '空心菜':
-                        msg = f'{water_spanish()}'
+                        msg = f'{water_spanish(olivine_amount)}'
                         message = TextSendMessage(text=msg)
                         line_bot_api.reply_message(event.reply_token, message)
                 else:
