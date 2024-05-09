@@ -1,13 +1,11 @@
 from flask import Flask, request, abort
 import os
-import os
 import numpy as np
 import requests
 import json
 import pandas as pd
 import matplotlib.pyplot as plt
 import statistics
-import re
 from linebot import (
     LineBotApi, WebhookHandler
 )
