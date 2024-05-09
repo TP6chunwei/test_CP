@@ -451,34 +451,35 @@ def water_spanish(reply_token):
     total_profit = veg_total_price + carbon_price
     net_profit = total_profit - total_cost
 
+    ## for plotting the graph
     data1 = [total_cost_ex, veg_total_price_ex, 0, net_profit_ex]
     data2 = [total_cost, total_profit, carbon_price, net_profit]
-    
-    x = np.arange(len(data1))  # the label locations
+    return data1
+    #x = np.arange(len(data1))  # the label locations
     
     # Define custom colors
-    color1 = '#bf794e'
-    color2 = '#00a381'
+    #color1 = '#bf794e'
+    #color2 = '#00a381'
     
-    plt.bar(x - 0.2, data1, color=color1, width=0.35, align='center', edgecolor='black', label='只有添加肥料')
-    plt.bar(x + 0.2, data2, color=color2, width=0.35, align='center', edgecolor='black', label='同時添加肥及橄欖砂')
+    #plt.bar(x - 0.2, data1, color=color1, width=0.35, align='center', edgecolor='black', label='只有添加肥料')
+    #plt.bar(x + 0.2, data2, color=color2, width=0.35, align='center', edgecolor='black', label='同時添加肥及橄欖砂')
     
-    plt.xlabel('類別', fontsize=12)
-    plt.ylabel('新臺幣', fontsize=12)
-    plt.title('原始農法及固碳農法的成本效益比較', fontsize=14)
-    plt.xticks(x, ['總共成本', '空心菜平均批發價', '碳權價格', '淨收益'], fontsize=10)
-    plt.yticks(fontsize=10)
-    plt.legend(fontsize=10)
+    #plt.xlabel('類別', fontsize=12)
+    #plt.ylabel('新臺幣', fontsize=12)
+    #plt.title('原始農法及固碳農法的成本效益比較', fontsize=14)
+    #plt.xticks(x, ['總共成本', '空心菜平均批發價', '碳權價格', '淨收益'], fontsize=10)
+    #plt.yticks(fontsize=10)
+    #plt.legend(fontsize=10)
     
     # Adding value labels
-    for i, v in enumerate(data1):
-        plt.text(i - 0.2, v + 5000, str(v), color=color1, ha='center', va='bottom', fontsize=9)
-    for i, v in enumerate(data2):
-        plt.text(i + 0.2, v + 5000, str(v), color=color2, ha='center', va='bottom', fontsize=9)
+    #for i, v in enumerate(data1):
+    #    plt.text(i - 0.2, v + 5000, str(v), color=color1, ha='center', va='bottom', fontsize=9)
+    #for i, v in enumerate(data2):
+    #    plt.text(i + 0.2, v + 5000, str(v), color=color2, ha='center', va='bottom', fontsize=9)
     
-    plt.grid(axis='y', linestyle='--', alpha=0.7)
+    #plt.grid(axis='y', linestyle='--', alpha=0.7)
     
-    plt.show()
+    #plt.show()
   # Create a PrettyTable object with column headers
     #myTable = PrettyTable(['項目',"只有添加肥料", "有添加肥料及橄欖砂"])
 
@@ -522,7 +523,7 @@ def handle_message(event):
                 olivine_amount = inputs[2].strip()
                 if crop_type in ['空心菜', '高麗菜', '花椰菜']:
                     if crop_tpye == '空心菜':
-                        water_spanish(event.reply_token)
+                        water_spanish(event.reply_token,message)
             else:
                 msg = '請輸入有效的農產品種類（空心菜、高麗菜、花椰菜）'
                 message = TextSendMessage(text=msg)
