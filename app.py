@@ -524,16 +524,12 @@ def handle_message(event):
                 fertilizer_amount = inputs[1].strip()
                 olivine_amount = inputs[2].strip()
                 if crop_type in ['空心菜', '高麗菜', '花椰菜']:
-                    if crop_tpye == '空心菜':
+                    if crop_type == '空心菜':
                         water_spanish(event.reply_token,message)
             else:
-                msg = '請輸入有效的農產品種類（空心菜、高麗菜、花椰菜）'
+                msg = '請輸入有效的農產品種類（空心菜、高麗菜、花椰菜），並且確保輸入格式正確，格式為農產品的種類，肥料量和橄欖石的量，並以逗號分隔'
                 message = TextSendMessage(text=msg)
                 line_bot_api.reply_message(event.reply_token, message)
-        else:
-            msg = '輸入格式錯誤，請確保輸入農產品的種類，肥料量和橄欖石的量，並以逗號分隔'
-            message = TextSendMessage(text=msg)
-            line_bot_api.reply_message(event.reply_token, message)
 
 
     else:
