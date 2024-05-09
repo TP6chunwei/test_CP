@@ -1,5 +1,4 @@
 from flask import Flask, request, abort
-from datetime import datetime
 import os
 import os
 import numpy as np
@@ -8,6 +7,7 @@ import json
 import pandas as pd
 import matplotlib.pyplot as plt
 import statistics
+import re
 from linebot import (
     LineBotApi, WebhookHandler
 )
@@ -267,8 +267,10 @@ def forecast_weather_data():
 
 def forecast_weather_description(aggregated_data, address):
   try:
-    city = address[5:8]
-    bundles = {
+    def exclude_number(string):
+        return ''.join(char for char in input_string if not char.isdigit())
+    city = exclude_number(address)[2:5]
+    bundles = 
         'PoP12h': [],
         'T': [],
         'MaxT': [],
@@ -292,24 +294,24 @@ def forecast_weather_description(aggregated_data, address):
     # Find the max value for PoP12h
     pop_max = df['PoP12h'].max()
     pop_maxidx = df['PoP12h'].idxmax()
-    # Extract Unix timestamp from the timestamp object
-    pop_maxidx_unix = pop_maxidx.timestamp()
-    # Now convert to datetime
-    pop_maxidx_dt = datetime.fromtimestamp(pop_maxidx_unix)
-    pop_month = pop_maxidx_dt.month
-    pop_date = pop_maxidx_dt.day
-    pop_message = f'{pop_month}/{pop_date}達{pop_max}%'
+    # # Extract Unix timestamp from the timestamp object
+    # pop_maxidx_unix = pop_maxidx.timestamp()
+    # # Now convert to datetime
+    # pop_maxidx_dt = datetime.fromtimestamp(pop_maxidx_unix)
+    # pop_month = pop_maxidx_dt.month
+    # pop_date = pop_maxidx_dt.day
+    pop_message = f'{pop_maxidx.month}/{pop_maxidx.day}達{pop_max}%'
 
     # Find the max value for MaxT
     T_max = df['MaxT'].max()
     T_maxidx = df['MaxT'].idxmax()
-    T_maxidx_unix = T_maxidx.timestamp()
-    T_maxidx_dt = datetime.fromtimestamp(T_maxidx_unix)
-    maxT_month = T_maxidx_dt.month
-    maxT_date = T_maxidx_dt.day
+    # T_maxidx_unix = T_maxidx.timestamp()
+    # T_maxidx_dt = datetime.fromtimestamp(T_maxidx_unix)
+    # maxT_month = T_maxidx_dt.month
+    # maxT_date = T_maxidx_dt.day
     # Using Unicode character for Celsius symbol
     celsius_symbol = '\u00B0C'
-    maxT_message = f'{maxT_month}/{maxT_date}達{T_max}{celsius_symbol}，'
+    maxT_message = f'{T_maxidx.month}/{T_maxidx.day}達{T_max}{celsius_symbol}，'
 
     # Find the minimum value for MinT
     T_min = df['MinT'].min()
@@ -318,7 +320,7 @@ def forecast_weather_description(aggregated_data, address):
     T_minidx_dt = datetime.fromtimestamp(T_minidx_unix)
     minT_month = T_minidx_dt.month
     minT_date = T_minidx_dt.day
-    minT_message = f'{minT_month}/{minT_date}達{T_min}{celsius_symbol}，'
+    minT_message = f'{T_minidx.month}/{T_minidx.day}達{T_min}{celsius_symbol}，'
 
     # Calculate for average temperature
     ave_t = round(df['T'].mean(), 2)
