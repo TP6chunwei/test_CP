@@ -348,7 +348,14 @@ def forecast_weather_description(aggregated_data, address):
 # 過去一個月的氣象資訊
 def past_weather(address):
   try:
-    city = address[5:7]
+    # city = address[5:7]
+    county_names = ["臺北市", "新北市", "基隆市", "桃園市", "新竹縣", "新竹市", "苗栗縣", 
+                    "臺中市", "彰化縣", "南投縣", "雲林縣", "嘉義縣", "嘉義市", "臺南市", 
+                    "高雄市", "屏東縣", "宜蘭縣", "花蓮縣", "臺東縣", "澎湖縣", "金門縣", "連江縣"]
+    
+    for county in county_names:
+      if county in address:
+        city = county
     authorize_code = 'CWA-371EFA85-E086-45AE-B068-E449E4478D6A'
     url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/C-B0027-001?Authorization={authorize_code}&format=JSON&weatherElement=AirTemperature,Precipitation&Month=4'
     r = requests.get(url)
@@ -496,7 +503,7 @@ def water_spanish(reply_token):
 def handle_message(event):
     if event.message.type == 'location':
         address = event.message.address.replace('台', '臺')
-        msg = f'{address}\n\n\n\n{current_weather(address)}\n\n{warning(address)}\n\n{forecast_weather_description(forecast_weather_data(), address)}'
+        msg = f'{address}\n\n{past_weather(address)}\n\n{current_weather(address)}\n\n{warning(address)}\n\n{forecast_weather_description(forecast_weather_data(), address)}'
         message = TextSendMessage(text=msg)
         line_bot_api.reply_message(event.reply_token, message)    
     elif  event.message.type == 'text':
