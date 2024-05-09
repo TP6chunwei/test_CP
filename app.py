@@ -267,9 +267,8 @@ def forecast_weather_data():
 
 def forecast_weather_description(aggregated_data, address):
   try:
-    def exclude_number(string):
-        return ''.join(char for char in input_string if not char.isdigit())
-    city = exclude_number(address)[2:5]
+    if address[:3] == 104:
+        city = '臺北市'
     bundles = 
         'PoP12h': [],
         'T': [],
@@ -294,21 +293,11 @@ def forecast_weather_description(aggregated_data, address):
     # Find the max value for PoP12h
     pop_max = df['PoP12h'].max()
     pop_maxidx = df['PoP12h'].idxmax()
-    # # Extract Unix timestamp from the timestamp object
-    # pop_maxidx_unix = pop_maxidx.timestamp()
-    # # Now convert to datetime
-    # pop_maxidx_dt = datetime.fromtimestamp(pop_maxidx_unix)
-    # pop_month = pop_maxidx_dt.month
-    # pop_date = pop_maxidx_dt.day
     pop_message = f'{pop_maxidx.month}/{pop_maxidx.day}達{pop_max}%'
 
     # Find the max value for MaxT
     T_max = df['MaxT'].max()
     T_maxidx = df['MaxT'].idxmax()
-    # T_maxidx_unix = T_maxidx.timestamp()
-    # T_maxidx_dt = datetime.fromtimestamp(T_maxidx_unix)
-    # maxT_month = T_maxidx_dt.month
-    # maxT_date = T_maxidx_dt.day
     # Using Unicode character for Celsius symbol
     celsius_symbol = '\u00B0C'
     maxT_message = f'{T_maxidx.month}/{T_maxidx.day}達{T_max}{celsius_symbol}，'
@@ -316,10 +305,6 @@ def forecast_weather_description(aggregated_data, address):
     # Find the minimum value for MinT
     T_min = df['MinT'].min()
     T_minidx = df['MinT'].idxmin()
-    T_minidx_unix = T_minidx.timestamp()
-    T_minidx_dt = datetime.fromtimestamp(T_minidx_unix)
-    minT_month = T_minidx_dt.month
-    minT_date = T_minidx_dt.day
     minT_message = f'{T_minidx.month}/{T_minidx.day}達{T_min}{celsius_symbol}，'
 
     # Calculate for average temperature
