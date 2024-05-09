@@ -399,6 +399,9 @@ def past_weather(address):
 
 ## 成本效益
 def water_spanish(reply_token):
+    msg = 'OK'
+    message = TextSendMessage(text=msg)
+    line_bot_api.reply_message(event.reply_token, message)
     #fetilizer_amt = float(reply_token[1])
     #olivine_amt = float(reply_token[2])
     #url = 'https://www.twfood.cc/topic/vege/%E6%B0%B4%E7%94%9F%E9%A1%9E'  # 替換成目標頁面的URL
@@ -406,7 +409,7 @@ def water_spanish(reply_token):
     #soup = BeautifulSoup(response.content, 'html.parser')
 
     # 初始化空列表來存儲爬取的數據
-    data = []
+    #data = []
 
     # 根據HTML結構尋找每個蔬菜的信息區塊
     #vege_blocks = soup.find_all('div', class_='vege_price')
@@ -497,8 +500,7 @@ def water_spanish(reply_token):
     #myTable.add_row(["淨收益", f"{net_profit_ex:.2f}", f"{net_profit:.2f}"])
     #return myTable
 
-    A = 'OK'
-    return A
+
 # Message handling
 @handler.add(MessageEvent, message=[TextMessage, LocationMessage])
 def handle_message(event):
