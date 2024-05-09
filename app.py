@@ -267,8 +267,7 @@ def forecast_weather_data():
 
 def forecast_weather_description(aggregated_data, address):
   try:
-    if address[:3] == 104:
-        city = '臺北市'
+    city = address[:3]
     bundles = 
         'PoP12h': [],
         'T': [],
