@@ -605,15 +605,15 @@ def brocolli(fertilizer_amount,olivine_amount):
     total_cost = (seed_cost + fertiliser + wage + pesticides + machine + olivine_price)
     total_cost_ex = (seed_cost + fertiliser + wage + pesticides + machine)
     dry_mass_kgha_fer = 20800 + (0.9833521087)*0 + (6.3069281943)*fetilizer_amt + (-0.0000055883)*0**2 + (-0.0000800838)*0*fetilizer_amt + (-0.0002548038)*fetilizer_amt**2
-    vege_type = df2_vege_prices['品項'][5] ##要換成花椰菜
-    price = float(df2_vege_prices['預估零售價(元/公斤)'][5]) ##當季好蔬菜
+    vege_type = df3_vege_prices['品項'][5] ##要換成花椰菜
+    price = float(df3_vege_prices['預估零售價(元/公斤)'][5]) ##當季好蔬菜
     veg_total_price_ex = price * dry_mass_kgha_fer
     #veg_total_price_ex = 786233
     net_profit_ex = veg_total_price_ex - total_cost_ex
     #profit
 
-    vege_type = df2_vege_prices['品項'][5] ##要換成花椰菜
-    price = float(df2_vege_prices['預估零售價(元/公斤)'][5]) ##當季好蔬菜
+    vege_type = df3_vege_prices['品項'][5] ##要換成花椰菜
+    price = float(df3vege_prices['預估零售價(元/公斤)'][5]) ##當季好蔬菜
     if olivine_amt ==0:
         coef = 1
         mul = 1
