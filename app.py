@@ -516,7 +516,7 @@ def cabbage(fertilizer_amount, olivine_amount):
     fetilizer_amt = float(fertilizer_amount)
     olivine_amt = float(olivine_amount)    ## vege type要換  ## crop density ## carbon sequestration統一  ## 3000kg
 
-     url = 'https://www.twfood.cc/topic/vege/%E8%91%89%E8%8F%9C%E9%A1%9E'  # 替換成目標頁面的URL
+    url = 'https://www.twfood.cc/topic/vege/%E8%91%89%E8%8F%9C%E9%A1%9E'  # 替換成目標頁面的URL
     response = requests.get(url)
     soup = BeautifulSoup(response.content, 'html.parser')
     data = []
