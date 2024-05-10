@@ -399,34 +399,43 @@ def past_weather(address):
     return e
 
 ## 成本效益
+import requests
+from bs4 import BeautifulSoup
+import pandas as pd
+
 def water_spanish(fertilizer_amount, olivine_amount):
     fetilizer_amt = float(fertilizer_amount)
     olivine_amt = float(olivine_amount)
-    # mul = fetilizer_amt * olivine_amt
-    # text = f'The product is: {mul}'
-    # return text
-    url = 'https://www.twfood.cc/topic/vege/%E6%B0%B4%E7%94%9F%E9%A1%9E'  # 替換成目標頁面的URL
+    
+    url = 'https://www.twfood.cc/topic/vege/%E6%B0%B4%E7%94%9F%E9%A1%9E'  # Replace with the target URL
     response = requests.get(url)
     soup = BeautifulSoup(response.content, 'html.parser')
 
-    # 初始化空列表來存儲爬取的數據
+    # Initialize empty lists to store scraped data
     data = []
 
-    # 根據HTML結構尋找每個蔬菜的信息區塊
+    # Find each vegetable's information block based on the HTML structure
     vege_blocks = soup.find_all('div', class_='vege_price')
 
     for block in vege_blocks:
         name = block.find('h4').text.strip()
         prices = block.find_all('span', class_='text-price')
         retail_price = prices[-4].text.strip() if len(prices) > 1 else 'N/A'
-        # 將每條數據作為列表添加到data中
+        # Append each data as a list to data
         data.append([name, retail_price])
 
-      # 將數據轉換為pandas DataFrame
+    # Convert data to a pandas DataFrame
     df = pd.DataFrame(data, columns=['品項', '本週平均批發價(元/公斤)'])
-    df_vege_prices = df.to_csv('vege_prices.csv', index=False)
-    text = f'the first veg is {df_vege_prices[0]}'
+
+    # Optional: Save the DataFrame to a CSV file
+    df.to_csv('vege_prices.csv', index=False)
+
+    # Returning the first vegetable's data along with user inputs
+    text = f"The first vegetable is {df['品項'][0]}, with an average wholesale price of {df['本週平均批發價(元/公斤)'][0]} per kilogram. \
+            You provided fertilizer amount: {fertilizer_amount} and olivine amount: {olivine_amount}."
+    
     return text
+
       #cost
   ## 農業部的成本表
     # seed_cost = 45453
