@@ -457,7 +457,8 @@ def water_spanish(fertilizer_amount,olivine_amount):
     ## for plotting the graph
     data1 = [total_cost_ex, veg_total_price_ex, 0, net_profit_ex]
     data2 = [total_cost, total_profit, carbon_price, net_profit]
-    return data1
+    description = f'總成本: {data1[0]} \n農產品價格: {data1[1]} \n碳價格: {data1[2]} \n淨收益: {data1[3]}'
+    return description
     #x = np.arange(len(data1))  # the label locations
     
     # Define custom colors
