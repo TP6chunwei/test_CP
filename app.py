@@ -605,7 +605,7 @@ def handle_message(event):
                         message = TextSendMessage(text=msg)
                         line_bot_api.reply_message(event.reply_token, message)
                     elif crop_type == '高麗菜':
-                        msg = f'{water_spanish(fertilizer_amount,olivine_amount)}'
+                        msg = f'{cabbage(fertilizer_amount,olivine_amount)}'
                         message = TextSendMessage(text=msg)
                         line_bot_api.reply_message(event.reply_token, message)
                 else:
