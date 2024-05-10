@@ -337,7 +337,7 @@ def forecast_weather_description(aggregated_data, address):
     elif ave_t < 15 and (df['PoP12h'] <= 30).all():
         advice = '未來一週低溫而少雨，請注意寒害與灌溉'
 
-    description = f'未來一週氣象預測:\n平均氣溫{ave_message}最高溫預計發生於{maxT_message}最低溫預計發生於{minT_message}最高降雨機率預計發生於{pop_message}\n{advice}'.strip('，')
+    description = f'未來一週氣象預測:\n平均氣溫{ave_message}最高溫預計發生於{maxT_message}最低溫預計發生於{minT_message}最高降雨機率預計發生於{pop_message}\n\n{advice}'.strip('，')
     return description
 
   except Exception as e:
@@ -347,14 +347,6 @@ def forecast_weather_description(aggregated_data, address):
 # 過去一個月的氣象資訊
 def past_weather(address):
   try:
-    # city = address[5:7]
-    county_names = ["臺北市", "新北市", "基隆市", "桃園市", "新竹縣", "新竹市", "苗栗縣", 
-                    "臺中市", "彰化縣", "南投縣", "雲林縣", "嘉義縣", "嘉義市", "臺南市", 
-                    "高雄市", "屏東縣", "宜蘭縣", "花蓮縣", "臺東縣", "澎湖縣", "金門縣", "連江縣"]
-    
-    for county in county_names:
-      if county in address:
-        city = county
     authorize_code = 'CWA-371EFA85-E086-45AE-B068-E449E4478D6A'
     url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/C-B0027-001?Authorization={authorize_code}&format=JSON&weatherElement=AirTemperature,Precipitation&Month=4'
     r = requests.get(url)
@@ -378,6 +370,13 @@ def past_weather(address):
     stations = [i for i in weather_dict.keys()]
 
     # retrieve the city info
+    county_names = ["臺北", "新北", "基隆", "桃園", "新竹", "新竹", "苗栗", 
+                    "臺中", "彰化", "南投", "雲林", "嘉義", "嘉義", "臺南", 
+                    "高雄", "屏東", "宜蘭", "花蓮", "臺東", "澎湖", "金門", "連江"]
+    
+    for county in county_names:
+        if county in address:
+            city = county
     if city == '新北':
       city = '板橋'
     if city == '南投':
