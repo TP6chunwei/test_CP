@@ -402,64 +402,64 @@ def past_weather(address):
 def water_spanish(fertilizer_amount, olivine_amount):
     fetilizer_amt = float(fertilizer_amount)
     olivine_amt = float(olivine_amount)
-    mul = fetilizer_amt * olivine_amt
-    text = f'The product is: {mul}'
-    return text
-    #url = 'https://www.twfood.cc/topic/vege/%E6%B0%B4%E7%94%9F%E9%A1%9E'  # 替換成目標頁面的URL
-    #response = requests.get(url)
-    #soup = BeautifulSoup(response.content, 'html.parser')
+    # mul = fetilizer_amt * olivine_amt
+    # text = f'The product is: {mul}'
+    # return text
+    url = 'https://www.twfood.cc/topic/vege/%E6%B0%B4%E7%94%9F%E9%A1%9E'  # 替換成目標頁面的URL
+    response = requests.get(url)
+    soup = BeautifulSoup(response.content, 'html.parser')
 
     # 初始化空列表來存儲爬取的數據
-    #data = []
+    data = []
 
     # 根據HTML結構尋找每個蔬菜的信息區塊
-    #vege_blocks = soup.find_all('div', class_='vege_price')
+    vege_blocks = soup.find_all('div', class_='vege_price')
 
-    #for block in vege_blocks:
-    #  name = block.find('h4').text.strip()
-    #  prices = block.find_all('span', class_='text-price')
-    #  retail_price = prices[-4].text.strip() if len(prices) > 1 else 'N/A'
-    #  # 將每條數據作為列表添加到data中
-    #  data.append([name, retail_price])
+    for block in vege_blocks:
+     name = block.find('h4').text.strip()
+     prices = block.find_all('span', class_='text-price')
+     retail_price = prices[-4].text.strip() if len(prices) > 1 else 'N/A'
+     # 將每條數據作為列表添加到data中
+     data.append([name, retail_price])
 
       # 將數據轉換為pandas DataFrame
-    #df = pd.DataFrame(data, columns=['品項', '本週平均批發價(元/公斤)'])
-    #df_vege_prices = df.to_csv('vege_prices.csv', index=False)
+    df = pd.DataFrame(data, columns=['品項', '本週平均批發價(元/公斤)'])
+    df_vege_prices = df.to_csv('vege_prices.csv', index=False)
       #cost
   ## 農業部的成本表
-    #seed_cost = 45453
-    #fertiliser = (fetilizer_amt/20)*290
-    #wage = 150951
-    #pesticides = 2652
-    #machine = 9150
-    #olivine_price = 20000*olivine_amt/1000
-    #total_cost = (seed_cost + fertiliser + wage + pesticides + machine + olivine_price)
-    #total_cost_ex = (seed_cost + fertiliser + wage + pesticides + machine)
+    seed_cost = 45453
+    fertiliser = (fetilizer_amt/20)*290
+    wage = 150951
+    pesticides = 2652
+    machine = 9150
+    olivine_price = 20000*olivine_amt/1000
+    total_cost = (seed_cost + fertiliser + wage + pesticides + machine + olivine_price)
+    total_cost_ex = (seed_cost + fertiliser + wage + pesticides + machine)
+    vege_type = df_vege_prices['品項'][0]
+    price = float(df_vege_prices['本週平均批發價(元/公斤)'][0]) ##當季好蔬菜
+    dry_mass_kgha_fer = 223.0708 + (0.1177986796)*0 + (0.8516414171)*fetilizer_amt + (-0.0000007937)*(0**2) + (-0.0000134670)*0*fetilizer_amt + (-0.0000354190)*(fetilizer_amt**2)
+    veg_total_price_ex = price * dry_mass_kgha_fer * 3
+    #veg_total_price_ex = 476883
+    net_profit_ex = veg_total_price_ex - total_cost_ex
+    #profit
     #vege_type = df_vege_prices['品項'][0]
     #price = float(df_vege_prices['本週平均批發價(元/公斤)'][0]) ##當季好蔬菜
-    #dry_mass_kgha_fer = 223.0708 + (0.1177986796)*0 + (0.8516414171)*fetilizer_amt + (-0.0000007937)*(0**2) + (-0.0000134670)*0*fetilizer_amt + (-0.0000354190)*(fetilizer_amt**2)
-    #veg_total_price_ex = price * dry_mass_kgha_fer * 3
-    ##veg_total_price_ex = 476883
-    ##net_profit_ex = veg_total_price_ex - total_cost_ex
-    ##profit
-    #vege_type = df_vege_prices['品項'][0]
-    #price = float(df_vege_prices['本週平均批發價(元/公斤)'][0]) ##當季好蔬菜
-    #if olivine_amt ==0:
+    # if olivine_amt ==0:
     #    coef = 1
-    #else :
+    # else :
     #    coef = 1.5
-    #dry_mass_kgha = 223.0708 + (0.1177986796)*olivine_amt + (0.8516414171)*fetilizer_amt + (-0.0000007937)*(olivine_amt**2) + (-0.0000134670)*olivine_amt*fetilizer_amt + (-0.0000354190)*(fetilizer_amt**2)
-    #veg_total_price = price * dry_mass_kgha * coef * 3 * 0.75  # (convert dry mass to mass : 5-10倍) # (crop density conversion : 3 from 農業部) ## (1.5是代表dry mass上升2倍但wet mass上升1.5倍)        
-    #carbon_sequestered = 0.0000028176 + 0.06567886979596845864 * olivine_amt + -0.00000032024927921929 * olivine_amt**2 + 0.00000000000057864824 * olivine_amt**3
-    #carbon_price = carbon_sequestered/1000 * 65*40*3
-    #total_profit = veg_total_price + carbon_price
-    #net_profit = total_profit - total_cost
+    # dry_mass_kgha = 223.0708 + (0.1177986796)*olivine_amt + (0.8516414171)*fetilizer_amt + (-0.0000007937)*(olivine_amt**2) + (-0.0000134670)*olivine_amt*fetilizer_amt + (-0.0000354190)*(fetilizer_amt**2)
+    # veg_total_price = price * dry_mass_kgha * coef * 3 * 0.75  # (convert dry mass to mass : 5-10倍) # (crop density conversion : 3 from 農業部) ## (1.5是代表dry mass上升2倍但wet mass上升1.5倍)        
+    # carbon_sequestered = 0.0000028176 + 0.06567886979596845864 * olivine_amt + -0.00000032024927921929 * olivine_amt**2 + 0.00000000000057864824 * olivine_amt**3
+    # carbon_price = carbon_sequestered/1000 * 65*40*3
+    # total_profit = veg_total_price + carbon_price
+    # net_profit = total_profit - total_cost
 
-    ## for plotting the graph
-    #data1 = [total_cost_ex, veg_total_price_ex, 0, net_profit_ex]
+    # for plotting the graph
+    data1 = [total_cost_ex, veg_total_price_ex, 0, net_profit_ex]
     #data2 = [total_cost, veg_total_price, carbon_price, net_profit]
-    #description = f'總成本: {data1[0]} \n農產品價格: {data1[1]} \n碳價格: {data1[2]} \n淨收益: {data1[3]}'
-    #return description
+    description = f'總成本: {data1[0]} \n農產品價格: {data1[1]} \n碳價格: {data1[2]} \n淨收益: {data1[3]}'
+    return description
     #x = np.arange(len(data1))  # the label locations
     
     # Define custom colors
