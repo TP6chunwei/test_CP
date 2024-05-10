@@ -399,13 +399,11 @@ def past_weather(address):
     return e
 
 ## 成本效益
-def water_spanish(fertilizer_amount,olivine_amount):
-    #msg = olivine_amount
-    #return msg
+def water_spanish(fertilizer_amount, olivine_amount):
     fetilizer_amt = float(fertilizer_amount)
     olivine_amt = float(olivine_amount)
-    mul = fetilizer_amt*olivine_amt
-    text = f'{mul}
+    mul = fetilizer_amt * olivine_amt
+    text = f'The product is: {mul}'
     return text
     #url = 'https://www.twfood.cc/topic/vege/%E6%B0%B4%E7%94%9F%E9%A1%9E'  # 替換成目標頁面的URL
     #response = requests.get(url)
