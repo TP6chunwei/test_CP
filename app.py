@@ -572,7 +572,7 @@ def cabbage(fertilizer_amount, olivine_amount):
     data1 = [total_cost_ex, veg_total_price_ex, 0, net_profit_ex]
     data2 = [total_cost, veg_total_price, carbon_price, net_profit]
     # description = f'原始農法 \n總成本: {round(data1[0], 1)} \n農產品價格: {round(data1[1], 1)} \n碳價格: {round(data1[2], 1)} \n淨收益: {round(data1[3], 1)} \n\n固碳農法 \n總成本: {round(data2[0], 1)} \n農產品價格: {round(data2[1], 1)} \n碳價格: {round(data2[2], 1)} \n淨收益: {round(data2[3], 1)}\n\n淨收益增長:{round(data2[3]-data1[3], 1)}'
-    description = f'原始農法 \n總成本: {data1[0]} \n農產品價格: {data1[1]} \n碳價格: {data1[2]} \n淨收益: {data1[3]} \n\n固碳農法 \n總成本: {data2[0]} \n農產品價格: {data2[1]} \n碳價格: {data2[2]} \n淨收益: {data2[3]}\n\n淨收益增長:{data2[3]-data1[3]}'
+    description = f'原始農法 \n總成本: {data1[0]:.1f} \n農產品價格: {data1[1]:.1f} \n碳價格: {data1[2]:.1f} \n淨收益: {data1[3]:.1f} \n\n固碳農法 \n總成本: {data2[0]:.1f} \n農產品價格: {data2[1]:.1f} \n碳價格: {data2[2]:.1f} \n淨收益: {data2[3]:.1f}\n\n淨收益增長:{data2[3]-data1[3]:.1f}'
     return description
 
 def brocolli(fertilizer_amount,olivine_amount):
@@ -630,7 +630,7 @@ def brocolli(fertilizer_amount,olivine_amount):
     # for plotting the graph
     data1 = [total_cost_ex, veg_total_price_ex, 0, net_profit_ex]
     data2 = [total_cost, veg_total_price, carbon_price, net_profit]
-    description = f'原始農法 \n總成本: {data1[0]} \n農產品價格: {data1[1]} \n碳價格: {data1[2]} \n淨收益: {data1[3]} \n\n固碳農法 \n總成本: {data2[0]} \n農產品價格: {data2[1]} \n碳價格: {data2[2]} \n淨收益: {data2[3]}\n\n淨收益增長:{data2[3]-data1[3]}'
+    description = f'原始農法 \n總成本: {data1[0]:.1f} \n農產品價格: {data1[1]:.1f} \n碳價格: {data1[2]:.1f} \n淨收益: {data1[3]:.1f} \n\n固碳農法 \n總成本: {data2[0]:.1f} \n農產品價格: {data2[1]:.1f} \n碳價格: {data2[2]:.1f} \n淨收益: {data2[3]:.1f}\n\n淨收益增長:{data2[3]-data1[3]:.1f}'
     return description
 
 
@@ -674,11 +674,11 @@ def handle_message(event):
                         message = TextSendMessage(text=msg)
                         line_bot_api.reply_message(event.reply_token, message)
                 else:
-                    msg = '請輸入有效的農產品種類（空心菜、高麗菜、花椰菜），並且確保輸入格式正確，格式為農產品的種類，肥料量和橄欖石的量，並以逗號分隔'
+                    msg = '請輸入農產品的種類（空心菜，高麗菜，花椰菜），添加於「一公頃農地中的」肥料量以及橄欖石的量(以公斤為單位)，格式為農產品的種類，肥料量和橄欖石的量，並以英文逗號分隔'
                     message = TextSendMessage(text=msg)
                     line_bot_api.reply_message(event.reply_token, message)
             else:
-                    msg = '請輸入有效的農產品種類（空心菜、高麗菜、花椰菜），並且確保輸入格式正確，格式為農產品的種類，肥料量和橄欖石的量，並以逗號分隔'
+                    msg = '請輸入農產品的種類（空心菜，高麗菜，花椰菜），添加於「一公頃農地中的」肥料量以及橄欖石的量(以公斤為單位)，格式為農產品的種類，肥料量和橄欖石的量，並以英文逗號分隔'
                     message = TextSendMessage(text=msg)
                     line_bot_api.reply_message(event.reply_token, message)
 
