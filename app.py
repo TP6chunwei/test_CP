@@ -445,15 +445,15 @@ def water_spanish(fertilizer_amount, olivine_amount):
     olivine_price = 20000*olivine_amt/1000
     total_cost = (seed_cost + fertiliser + wage + pesticides + machine + olivine_price)
     total_cost_ex = (seed_cost + fertiliser + wage + pesticides + machine)
-    vege_type = df['品項'][0]
-    price = float(df['本週平均批發價(元/公斤)'][0]) ##當季好蔬菜
+    vege_type = df['品項'][1]
+    price = float(df['本週平均批發價(元/公斤)'][1]) ##當季好蔬菜
     dry_mass_kgha_fer = 223.0708 + (0.1177986796)*0 + (0.8516414171)*fetilizer_amt + (-0.0000007937)*(0**2) + (-0.0000134670)*0*fetilizer_amt + (-0.0000354190)*(fetilizer_amt**2)
     veg_total_price_ex = price * dry_mass_kgha_fer * 3
     #veg_total_price_ex = 476883
     net_profit_ex = veg_total_price_ex - total_cost_ex
     #profit
-    vege_type = df['品項'][0]
-    price = float(df['本週平均批發價(元/公斤)'][0]) ##當季好蔬菜
+    vege_type = df['品項'][1]
+    price = float(df['本週平均批發價(元/公斤)'][1]) ##當季好蔬菜
     if olivine_amt ==0:
         coef = 1
     else :
@@ -468,7 +468,7 @@ def water_spanish(fertilizer_amount, olivine_amount):
     # for plotting the graph
     data1 = [total_cost_ex, veg_total_price_ex, 0, net_profit_ex]
     data2 = [total_cost, veg_total_price, carbon_price, net_profit]
-    description = f'總成本: {data1[0]} \n農產品價格: {data1[1]} \n碳價格: {data1[2]} \n淨收益: {data1[3]}'
+    description = f'原始農法 \n總成本: {data1[0]} \n農產品價格: {data1[1]} \n碳價格: {data1[2]} \n淨收益: {data1[3]} \n\n固碳農法 \n總成本: {data2[0]} \n農產品價格: {data2[1]} \n碳價格: {data2[2]} \n淨收益: {data2[3]}\n\n淨收益增長:{data2[3]-data1[3]}'
     return description
     #x = np.arange(len(data1))  # the label locations
     
