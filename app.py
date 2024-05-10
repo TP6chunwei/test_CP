@@ -431,46 +431,46 @@ def water_spanish(fertilizer_amount, olivine_amount):
     df.to_csv('vege_prices.csv', index=False)
 
     # Returning the first vegetable's data along with user inputs
-    text = f"The first vegetable is {df['品項'][0]}, with an average wholesale price of {df['本週平均批發價(元/公斤)'][0]} per kilogram. \
-            You provided fertilizer amount: {fertilizer_amount} and olivine amount: {olivine_amount}."
+    #text = f"The first vegetable is {df['品項'][0]}, with an average wholesale price of {df['本週平均批發價(元/公斤)'][0]} per kilogram. \
+    #        You provided fertilizer amount: {fertilizer_amount} and olivine amount: {olivine_amount}."
     
-    return text
+    #return text
 
       #cost
   ## 農業部的成本表
-    # seed_cost = 45453
-    # fertiliser = (fetilizer_amt/20)*290
-    # wage = 150951
-    # pesticides = 2652
-    # machine = 9150
-    # olivine_price = 20000*olivine_amt/1000
-    # total_cost = (seed_cost + fertiliser + wage + pesticides + machine + olivine_price)
-    # total_cost_ex = (seed_cost + fertiliser + wage + pesticides + machine)
-    # vege_type = df_vege_prices['品項'][0]
-    # price = float(df_vege_prices['本週平均批發價(元/公斤)'][0]) ##當季好蔬菜
-    # dry_mass_kgha_fer = 223.0708 + (0.1177986796)*0 + (0.8516414171)*fetilizer_amt + (-0.0000007937)*(0**2) + (-0.0000134670)*0*fetilizer_amt + (-0.0000354190)*(fetilizer_amt**2)
-    # veg_total_price_ex = price * dry_mass_kgha_fer * 3
-    # #veg_total_price_ex = 476883
-    # net_profit_ex = veg_total_price_ex - total_cost_ex
+    seed_cost = 45453
+    fertiliser = (fetilizer_amt/20)*290
+    wage = 150951
+    pesticides = 2652
+    machine = 9150
+    olivine_price = 20000*olivine_amt/1000
+    total_cost = (seed_cost + fertiliser + wage + pesticides + machine + olivine_price)
+    total_cost_ex = (seed_cost + fertiliser + wage + pesticides + machine)
+    vege_type = df['品項'][0]
+    price = float(df['本週平均批發價(元/公斤)'][0]) ##當季好蔬菜
+    dry_mass_kgha_fer = 223.0708 + (0.1177986796)*0 + (0.8516414171)*fetilizer_amt + (-0.0000007937)*(0**2) + (-0.0000134670)*0*fetilizer_amt + (-0.0000354190)*(fetilizer_amt**2)
+    veg_total_price_ex = price * dry_mass_kgha_fer * 3
+    #veg_total_price_ex = 476883
+    net_profit_ex = veg_total_price_ex - total_cost_ex
     #profit
-    #vege_type = df_vege_prices['品項'][0]
-    #price = float(df_vege_prices['本週平均批發價(元/公斤)'][0]) ##當季好蔬菜
-    # if olivine_amt ==0:
-    #    coef = 1
-    # else :
-    #    coef = 1.5
-    # dry_mass_kgha = 223.0708 + (0.1177986796)*olivine_amt + (0.8516414171)*fetilizer_amt + (-0.0000007937)*(olivine_amt**2) + (-0.0000134670)*olivine_amt*fetilizer_amt + (-0.0000354190)*(fetilizer_amt**2)
-    # veg_total_price = price * dry_mass_kgha * coef * 3 * 0.75  # (convert dry mass to mass : 5-10倍) # (crop density conversion : 3 from 農業部) ## (1.5是代表dry mass上升2倍但wet mass上升1.5倍)        
-    # carbon_sequestered = 0.0000028176 + 0.06567886979596845864 * olivine_amt + -0.00000032024927921929 * olivine_amt**2 + 0.00000000000057864824 * olivine_amt**3
-    # carbon_price = carbon_sequestered/1000 * 65*40*3
-    # total_profit = veg_total_price + carbon_price
-    # net_profit = total_profit - total_cost
+    vege_type = df['品項'][0]
+    price = float(df['本週平均批發價(元/公斤)'][0]) ##當季好蔬菜
+    if olivine_amt ==0:
+        coef = 1
+    else :
+        coef = 1.5
+    dry_mass_kgha = 223.0708 + (0.1177986796)*olivine_amt + (0.8516414171)*fetilizer_amt + (-0.0000007937)*(olivine_amt**2) + (-0.0000134670)*olivine_amt*fetilizer_amt + (-0.0000354190)*(fetilizer_amt**2)
+    veg_total_price = price * dry_mass_kgha * coef * 3 * 0.75  # (convert dry mass to mass : 5-10倍) # (crop density conversion : 3 from 農業部) ## (1.5是代表dry mass上升2倍但wet mass上升1.5倍)        
+    carbon_sequestered = 0.0000028176 + 0.06567886979596845864 * olivine_amt + -0.00000032024927921929 * olivine_amt**2 + 0.00000000000057864824 * olivine_amt**3
+    carbon_price = carbon_sequestered/1000 * 65*40*3
+    total_profit = veg_total_price + carbon_price
+    net_profit = total_profit - total_cost
 
     # for plotting the graph
-    #data1 = [total_cost_ex, veg_total_price_ex, 0, net_profit_ex]
-    #data2 = [total_cost, veg_total_price, carbon_price, net_profit]
-    #description = f'總成本: {data1[0]} \n農產品價格: {data1[1]} \n碳價格: {data1[2]} \n淨收益: {data1[3]}'
-    #return description
+    data1 = [total_cost_ex, veg_total_price_ex, 0, net_profit_ex]
+    data2 = [total_cost, veg_total_price, carbon_price, net_profit]
+    description = f'總成本: {data1[0]} \n農產品價格: {data1[1]} \n碳價格: {data1[2]} \n淨收益: {data1[3]}'
+    return description
     #x = np.arange(len(data1))  # the label locations
     
     # Define custom colors
