@@ -575,6 +575,67 @@ def cabbage(fertilizer_amount, olivine_amount):
     description = f'原始農法 \n總成本: {data1[0]} \n農產品價格: {data1[1]} \n碳價格: {data1[2]} \n淨收益: {data1[3]} \n\n固碳農法 \n總成本: {data2[0]} \n農產品價格: {data2[1]} \n碳價格: {data2[2]} \n淨收益: {data2[3]}\n\n淨收益增長:{data2[3]-data1[3]}'
     return description
 
+def brocolli(fertilizer_amount,olivine_amount):
+    fetilizer_amt = float(fertilizer_amount)
+    olivine_amt = float(olivine_amount)    ## vege type要換  ## crop density ## carbon sequestration統一  ## 3000kg
+    url = 'https://www.twfood.cc/topic/vege/%E8%91%89%E8%8F%9C%E9%A1%9E'  # 替換成目標頁面的URL
+    response = requests.get(url)
+    soup = BeautifulSoup(response.content, 'html.parser')
+    data = []
+    # 根據HTML結構尋找每個蔬菜的信息區塊
+    vege_blocks = soup.find_all('div', class_='vege_price')
+
+    for block in vege_blocks:
+        name = block.find('h4').text.strip()
+        prices = block.find_all('span', class_='text-price')
+        retail_price = prices[-4].text.strip() if len(prices) > 1 else 'N/A'
+        data.append([name, retail_price])
+
+# 將數據轉換為pandas DataFrame
+    df3 = pd.DataFrame(data, columns=['品項', '預估零售價(元/公斤)'])
+    df3.to_csv('vege_prices.csv', index=False)
+      #cost
+    ## 農業部的成本表
+    seed_cost = 25254
+    fertiliser = (fetilizer_amt)*410/12 ## 黑汪特5號 理應是100kg/分地 1公頃是10.3102分地 所以要下1031公斤
+    wage = 111631
+    pesticides = 45635
+    machine = 16603
+    olivine_price = 20000*olivine_amt/1000
+    total_cost = (seed_cost + fertiliser + wage + pesticides + machine + olivine_price)
+    total_cost_ex = (seed_cost + fertiliser + wage + pesticides + machine)
+    dry_mass_kgha_fer = 20800 + (0.9833521087)*0 + (6.3069281943)*fetilizer_amt + (-0.0000055883)*0**2 + (-0.0000800838)*0*fetilizer_amt + (-0.0002548038)*fetilizer_amt**2
+    vege_type = df2_vege_prices['品項'][5] ##要換成花椰菜
+    price = float(df2_vege_prices['預估零售價(元/公斤)'][5]) ##當季好蔬菜
+    veg_total_price_ex = price * dry_mass_kgha_fer
+    #veg_total_price_ex = 786233
+    net_profit_ex = veg_total_price_ex - total_cost_ex
+    #profit
+
+    vege_type = df2_vege_prices['品項'][5] ##要換成花椰菜
+    price = float(df2_vege_prices['預估零售價(元/公斤)'][5]) ##當季好蔬菜
+    if olivine_amt ==0:
+        coef = 1
+        mul = 1
+    else :
+        coef = 1.5
+        mul = 0.8
+      #29591.1825
+    dry_mass_kgha = 20800 + (0.9833521087)*olivine_amt + (6.3069281943)*fetilizer_amt + (-0.0000055883)*olivine_amt**2 + (-0.0000800838)*olivine_amt*fetilizer_amt + (-0.0002548038)*fetilizer_amt**2
+    veg_total_price = price * dry_mass_kgha * coef * mul  # (convert dry mass to mass : 5-10倍) # (crop density conversion : 3 from 農業部) ## (1.5是代表dry mass上升2倍但wet mass上升1.5倍)
+    carbon_sequestered = 0.0000028176 + 0.06567886979596845864 * olivine_amt + -0.00000032024927921929 * olivine_amt**2 + 0.00000000000057864824 * olivine_amt**3
+    carbon_price = carbon_sequestered/1000 *65*120
+    total_profit = veg_total_price + carbon_price
+    net_profit = total_profit - total_cost
+    # for plotting the graph
+    data1 = [total_cost_ex, veg_total_price_ex, 0, net_profit_ex]
+    data2 = [total_cost, veg_total_price, carbon_price, net_profit]
+    description = f'原始農法 \n總成本: {data1[0]} \n農產品價格: {data1[1]} \n碳價格: {data1[2]} \n淨收益: {data1[3]} \n\n固碳農法 \n總成本: {data2[0]} \n農產品價格: {data2[1]} \n碳價格: {data2[2]} \n淨收益: {data2[3]}\n\n淨收益增長:{data2[3]-data1[3]}'
+    return description
+
+
+
+
 # Message handling
 @handler.add(MessageEvent, message=[TextMessage, LocationMessage])
 def handle_message(event):
@@ -606,6 +667,10 @@ def handle_message(event):
                         line_bot_api.reply_message(event.reply_token, message)
                     elif crop_type == '高麗菜':
                         msg = f'{cabbage(fertilizer_amount,olivine_amount)}'
+                        message = TextSendMessage(text=msg)
+                        line_bot_api.reply_message(event.reply_token, message)
+                    elif crop_type == '花椰菜':
+                        msg = f'{brocolli(fertilizer_amount,olivine_amount)}'
                         message = TextSendMessage(text=msg)
                         line_bot_api.reply_message(event.reply_token, message)
                 else:
