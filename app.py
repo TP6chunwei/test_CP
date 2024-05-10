@@ -613,7 +613,7 @@ def brocolli(fertilizer_amount,olivine_amount):
     #profit
 
     vege_type = df3_vege_prices['品項'][5] ##要換成花椰菜
-    price = float(df3vege_prices['預估零售價(元/公斤)'][5]) ##當季好蔬菜
+    price = float(df3_vege_prices['預估零售價(元/公斤)'][5]) ##當季好蔬菜
     if olivine_amt ==0:
         coef = 1
         mul = 1
