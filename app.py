@@ -497,15 +497,18 @@ def water_spanish(fertilizer_amount,olivine_amount):
     
     plt.grid(axis='y', linestyle='--', alpha=0.7)
     plt.savefig('images/test.png')
-    return 'https://test-cp.onrender.com/static/test.png'
+    messages = 'success'
+    #return 'https://test-cp.onrender.com/static/test.png'
     
-    #line_bot_api.reply_message(
-    #        reply_token,
-    #        ImageSendMessage(
-    #            original_content_url='https://test-cp.onrender.com/static/test.png',
-    #            preview_image_url='https://test-cp.onrender.com/static/test.png'
-    #        )
-    #    )
+    line_bot_api.reply_message(
+           fertilizer_amount,
+        olivine_amount,
+        TextSendMessage(text=messages),
+           ImageSendMessage(
+               original_content_url='https://test-cp.onrender.com/static/test.png',
+               preview_image_url='https://test-cp.onrender.com/static/test.png'
+           )
+       )
   # Create a PrettyTable object with column headers
     #myTable = PrettyTable(['項目',"只有添加肥料", "有添加肥料及橄欖砂"])
 
@@ -658,7 +661,7 @@ def handle_message(event):
     elif  event.message.type == 'text':
         msg = event.message.text
         if msg.lower() in ['雷達回波圖', '雷達回波', 'radar']:
-            reply_weather_image(reply_token)
+            reply_weather_image(event.reply_token)
         if msg in ['溫度分布', '溫度分布圖', '溫度分佈', '溫度分佈圖']:
             reply_temperature_image(event.reply_token)
         if msg == '成本效益':
@@ -673,10 +676,10 @@ def handle_message(event):
                 olivine_amount = inputs[2].strip()
                 if crop_type in ['空心菜', '高麗菜', '花椰菜']:
                     if crop_type == '空心菜':
-                        #water_spanish(event.fertilizer_amount,event.olivine_amount)
-                        msg = f'{water_spanish(fertilizer_amount,olivine_amount)}'
-                        message = TextSendMessage(text=msg)
-                        line_bot_api.reply_message(event.reply_token, message)
+                        water_spanish(event.fertilizer_amount,event.olivine_amount)
+                        #msg = f'{water_spanish(fertilizer_amount,olivine_amount)}'
+                        #message = TextSendMessage(text=msg)
+                        #line_bot_api.reply_message(event.reply_token, message)
                     elif crop_type == '高麗菜':
                         msg = f'{cabbage(fertilizer_amount,olivine_amount)}'
                         message = TextSendMessage(text=msg)
