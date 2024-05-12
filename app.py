@@ -19,7 +19,8 @@ from linebot.models import (
 from bs4 import BeautifulSoup
 from prettytable import PrettyTable
 import matplotlib
-
+import random
+import string
 app = Flask(__name__, static_url_path='/static', static_folder='images')
 
 # Channel Access Token and Secret (Note: These should ideally be stored securely, not hardcoded)
