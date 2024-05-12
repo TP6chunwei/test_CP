@@ -406,106 +406,107 @@ import pandas as pd
 def water_spanish(reply_token):
     fertilizer_amount = reply_token[1].strip()
     olivine_amount = reply_token[2].strip()
-    fetilizer_amt = float(fertilizer_amount)
-    olivine_amt = float(olivine_amount)
+    return fertilizer_amount
+  #   fetilizer_amt = float(fertilizer_amount)
+  #   olivine_amt = float(olivine_amount)
     
-    url = 'https://www.twfood.cc/topic/vege/%E6%B0%B4%E7%94%9F%E9%A1%9E'  # Replace with the target URL
-    response = requests.get(url)
-    soup = BeautifulSoup(response.content, 'html.parser')
+  #   url = 'https://www.twfood.cc/topic/vege/%E6%B0%B4%E7%94%9F%E9%A1%9E'  # Replace with the target URL
+  #   response = requests.get(url)
+  #   soup = BeautifulSoup(response.content, 'html.parser')
 
-    # Initialize empty lists to store scraped data
-    data = []
+  #   # Initialize empty lists to store scraped data
+  #   data = []
 
-    # Find each vegetable's information block based on the HTML structure
-    vege_blocks = soup.find_all('div', class_='vege_price')
+  #   # Find each vegetable's information block based on the HTML structure
+  #   vege_blocks = soup.find_all('div', class_='vege_price')
 
-    for block in vege_blocks:
-        name = block.find('h4').text.strip()
-        prices = block.find_all('span', class_='text-price')
-        retail_price = prices[-4].text.strip() if len(prices) > 1 else 'N/A'
-        # Append each data as a list to data
-        data.append([name, retail_price])
+  #   for block in vege_blocks:
+  #       name = block.find('h4').text.strip()
+  #       prices = block.find_all('span', class_='text-price')
+  #       retail_price = prices[-4].text.strip() if len(prices) > 1 else 'N/A'
+  #       # Append each data as a list to data
+  #       data.append([name, retail_price])
 
-    # Convert data to a pandas DataFrame
-    df = pd.DataFrame(data, columns=['品項', '本週平均批發價(元/公斤)'])
+  #   # Convert data to a pandas DataFrame
+  #   df = pd.DataFrame(data, columns=['品項', '本週平均批發價(元/公斤)'])
 
-    # Optional: Save the DataFrame to a CSV file
-    df.to_csv('vege_prices.csv', index=False)
+  #   # Optional: Save the DataFrame to a CSV file
+  #   df.to_csv('vege_prices.csv', index=False)
 
-    # Returning the first vegetable's data along with user inputs
-    #text = f"The first vegetable is {df['品項'][0]}, with an average wholesale price of {df['本週平均批發價(元/公斤)'][0]} per kilogram. \
-    #        You provided fertilizer amount: {fertilizer_amount} and olivine amount: {olivine_amount}."
+  #   # Returning the first vegetable's data along with user inputs
+  #   #text = f"The first vegetable is {df['品項'][0]}, with an average wholesale price of {df['本週平均批發價(元/公斤)'][0]} per kilogram. \
+  #   #        You provided fertilizer amount: {fertilizer_amount} and olivine amount: {olivine_amount}."
     
-    #return text
+  #   #return text
 
-      #cost
-  ## 農業部的成本表
-    seed_cost = 45453
-    fertiliser = (fetilizer_amt/20)*290
-    wage = 150951
-    pesticides = 2652
-    machine = 9150
-    olivine_price = 20000*olivine_amt/1000
-    total_cost = (seed_cost + fertiliser + wage + pesticides + machine + olivine_price)
-    total_cost_ex = (seed_cost + fertiliser + wage + pesticides + machine)
-    vege_type = df['品項'][1]
-    price = float(df['本週平均批發價(元/公斤)'][1]) ##當季好蔬菜
-    dry_mass_kgha_fer = 223.0708 + (0.1177986796)*0 + (0.8516414171)*fetilizer_amt + (-0.0000007937)*(0**2) + (-0.0000134670)*0*fetilizer_amt + (-0.0000354190)*(fetilizer_amt**2)
-    veg_total_price_ex = price * dry_mass_kgha_fer * 3
-    #veg_total_price_ex = 476883
-    net_profit_ex = veg_total_price_ex - total_cost_ex
-    #profit
-    vege_type = df['品項'][1]
-    price = float(df['本週平均批發價(元/公斤)'][1]) ##當季好蔬菜
-    if olivine_amt ==0:
-        coef = 1
-    else :
-        coef = 1.5
-    dry_mass_kgha = 223.0708 + (0.1177986796)*olivine_amt + (0.8516414171)*fetilizer_amt + (-0.0000007937)*(olivine_amt**2) + (-0.0000134670)*olivine_amt*fetilizer_amt + (-0.0000354190)*(fetilizer_amt**2)
-    veg_total_price = price * dry_mass_kgha * coef * 3 * 0.75  # (convert dry mass to mass : 5-10倍) # (crop density conversion : 3 from 農業部) ## (1.5是代表dry mass上升2倍但wet mass上升1.5倍)        
-    carbon_sequestered = 0.0000028176 + 0.06567886979596845864 * olivine_amt + -0.00000032024927921929 * olivine_amt**2 + 0.00000000000057864824 * olivine_amt**3
-    carbon_price = carbon_sequestered/1000 * 65*40*3
-    total_profit = veg_total_price + carbon_price
-    net_profit = total_profit - total_cost
+  #     #cost
+  # ## 農業部的成本表
+  #   seed_cost = 45453
+  #   fertiliser = (fetilizer_amt/20)*290
+  #   wage = 150951
+  #   pesticides = 2652
+  #   machine = 9150
+  #   olivine_price = 20000*olivine_amt/1000
+  #   total_cost = (seed_cost + fertiliser + wage + pesticides + machine + olivine_price)
+  #   total_cost_ex = (seed_cost + fertiliser + wage + pesticides + machine)
+  #   vege_type = df['品項'][1]
+  #   price = float(df['本週平均批發價(元/公斤)'][1]) ##當季好蔬菜
+  #   dry_mass_kgha_fer = 223.0708 + (0.1177986796)*0 + (0.8516414171)*fetilizer_amt + (-0.0000007937)*(0**2) + (-0.0000134670)*0*fetilizer_amt + (-0.0000354190)*(fetilizer_amt**2)
+  #   veg_total_price_ex = price * dry_mass_kgha_fer * 3
+  #   #veg_total_price_ex = 476883
+  #   net_profit_ex = veg_total_price_ex - total_cost_ex
+  #   #profit
+  #   vege_type = df['品項'][1]
+  #   price = float(df['本週平均批發價(元/公斤)'][1]) ##當季好蔬菜
+  #   if olivine_amt ==0:
+  #       coef = 1
+  #   else :
+  #       coef = 1.5
+  #   dry_mass_kgha = 223.0708 + (0.1177986796)*olivine_amt + (0.8516414171)*fetilizer_amt + (-0.0000007937)*(olivine_amt**2) + (-0.0000134670)*olivine_amt*fetilizer_amt + (-0.0000354190)*(fetilizer_amt**2)
+  #   veg_total_price = price * dry_mass_kgha * coef * 3 * 0.75  # (convert dry mass to mass : 5-10倍) # (crop density conversion : 3 from 農業部) ## (1.5是代表dry mass上升2倍但wet mass上升1.5倍)        
+  #   carbon_sequestered = 0.0000028176 + 0.06567886979596845864 * olivine_amt + -0.00000032024927921929 * olivine_amt**2 + 0.00000000000057864824 * olivine_amt**3
+  #   carbon_price = carbon_sequestered/1000 * 65*40*3
+  #   total_profit = veg_total_price + carbon_price
+  #   net_profit = total_profit - total_cost
 
-    # for plotting the graph
-    data1 = [total_cost_ex, veg_total_price_ex, 0, net_profit_ex]
-    data2 = [total_cost, veg_total_price, carbon_price, net_profit]
-    #description = f'原始農法 \n總成本: {data1[0]:.1f} \n農產品價格: {data1[1]:.1f} \n碳價格: {data1[2]:.1f} \n淨收益: {data1[3]:.1f} \n\n固碳農法 \n總成本: {data2[0]:.1f} \n農產品價格: {data2[1]:.1f} \n碳價格: {data2[2]:.1f} \n淨收益: {data2[3]:.1f}\n\n淨收益增長:{data2[3]-data1[3]:.1f}'
-    #return description
+  #   # for plotting the graph
+  #   data1 = [total_cost_ex, veg_total_price_ex, 0, net_profit_ex]
+  #   data2 = [total_cost, veg_total_price, carbon_price, net_profit]
+  #   #description = f'原始農法 \n總成本: {data1[0]:.1f} \n農產品價格: {data1[1]:.1f} \n碳價格: {data1[2]:.1f} \n淨收益: {data1[3]:.1f} \n\n固碳農法 \n總成本: {data2[0]:.1f} \n農產品價格: {data2[1]:.1f} \n碳價格: {data2[2]:.1f} \n淨收益: {data2[3]:.1f}\n\n淨收益增長:{data2[3]-data1[3]:.1f}'
+  #   #return description
 
-    matplotlib.rc('font', family='Microsoft JhengHei')
-    x = np.arange(len(data1))  # the label locations
+  #   matplotlib.rc('font', family='Microsoft JhengHei')
+  #   x = np.arange(len(data1))  # the label locations
     
-    # Define custom colors
-    color1 = '#bf794e'
-    color2 = '#00a381'
+  #   # Define custom colors
+  #   color1 = '#bf794e'
+  #   color2 = '#00a381'
     
-    plt.bar(x - 0.2, data1, color=color1, width=0.35, align='center', edgecolor='black', label='只有添加肥料')
-    plt.bar(x + 0.2, data2, color=color2, width=0.35, align='center', edgecolor='black', label='同時添加肥及橄欖砂')
+  #   plt.bar(x - 0.2, data1, color=color1, width=0.35, align='center', edgecolor='black', label='只有添加肥料')
+  #   plt.bar(x + 0.2, data2, color=color2, width=0.35, align='center', edgecolor='black', label='同時添加肥及橄欖砂')
     
-    plt.xlabel('類別', fontsize=12)
-    plt.ylabel('新臺幣', fontsize=12)
-    plt.title('原始農法及固碳農法的成本效益比較', fontsize=14)
-    plt.xticks(x, ['總共成本', '空心菜平均批發價', '碳權價格', '淨收益'], fontsize=10)
-    plt.yticks(fontsize=10)
-    plt.legend(fontsize=10)
-    matplotlib.rc('font', family='Microsoft JhengHei')
-    # Adding value labels
-    for i, v in enumerate(data1):
-        plt.text(i - 0.2, v + 5000, f"{v:.1f}", color=color1, ha='center', va='bottom', fontsize=9)
-    for i, v in enumerate(data2):
-        plt.text(i + 0.2, v + 5000, f"{v:.1f}", color=color2, ha='center', va='bottom', fontsize=9)
+  #   plt.xlabel('類別', fontsize=12)
+  #   plt.ylabel('新臺幣', fontsize=12)
+  #   plt.title('原始農法及固碳農法的成本效益比較', fontsize=14)
+  #   plt.xticks(x, ['總共成本', '空心菜平均批發價', '碳權價格', '淨收益'], fontsize=10)
+  #   plt.yticks(fontsize=10)
+  #   plt.legend(fontsize=10)
+  #   matplotlib.rc('font', family='Microsoft JhengHei')
+  #   # Adding value labels
+  #   for i, v in enumerate(data1):
+  #       plt.text(i - 0.2, v + 5000, f"{v:.1f}", color=color1, ha='center', va='bottom', fontsize=9)
+  #   for i, v in enumerate(data2):
+  #       plt.text(i + 0.2, v + 5000, f"{v:.1f}", color=color2, ha='center', va='bottom', fontsize=9)
     
-    plt.grid(axis='y', linestyle='--', alpha=0.7)
-    plt.savefig('images/test.png')
-    line_bot_api.reply_message(
-            reply_token,
-            ImageSendMessage(
-                original_content_url=images/test.png,
-                preview_image_url=images/test.png
-            )
-        )
+  #   plt.grid(axis='y', linestyle='--', alpha=0.7)
+  #   plt.savefig('images/test.png')
+  #   line_bot_api.reply_message(
+  #           reply_token,
+  #           ImageSendMessage(
+  #               original_content_url=images/test.png,
+  #               preview_image_url=images/test.png
+  #           )
+  #       )
   # Create a PrettyTable object with column headers
     #myTable = PrettyTable(['項目',"只有添加肥料", "有添加肥料及橄欖砂"])
 
@@ -673,11 +674,10 @@ def handle_message(event):
                 #olivine_amount = inputs[2].strip()
                 if crop_type in ['空心菜', '高麗菜', '花椰菜']:
                     if crop_type == '空心菜':
-                        #msg = f'{water_spanish(fertilizer_amount,olivine_amount)}'
-                        water_spanish(event.reply_token)
-                        #message = TextSendMessage(text=msg)
-                        
-                        #line_bot_api.reply_message(event.reply_token, message)
+                        #water_spanish(event.reply_token)
+                        msg = f'{water_spanish(event.reply_token)}'
+                        message = TextSendMessage(text=msg)
+                        line_bot_api.reply_message(event.reply_token, message)
                     elif crop_type == '高麗菜':
                         msg = f'{cabbage(fertilizer_amount,olivine_amount)}'
                         message = TextSendMessage(text=msg)
