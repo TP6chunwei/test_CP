@@ -672,8 +672,8 @@ def handle_message(event):
                 crop_type = inputs[0].strip()
                 #fertilizer_amount = inputs[1].strip()
                 #olivine_amount = inputs[2].strip()
-                if inputs in ['空心菜', '高麗菜', '花椰菜']:
-                    if inputs[0] == '空心菜':
+                if crop_type in ['空心菜', '高麗菜', '花椰菜']:
+                    if crop_type == '空心菜':
                         #msg = f'{water_spanish(fertilizer_amount,olivine_amount)}'
                         water_spanish(event.reply_token)
                         #message = TextSendMessage(text=msg)
