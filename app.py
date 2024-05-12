@@ -488,7 +488,7 @@ def water_spanish(fertilizer_amount,olivine_amount):
     plt.xticks(x, ['總共成本', '空心菜平均批發價', '碳權價格', '淨收益'], fontsize=10)
     plt.yticks(fontsize=10)
     plt.legend(fontsize=10)
-    matplotlib.rc('font', family='Microsoft JhengHei')
+    #matplotlib.rc('font', family='Microsoft JhengHei')
     # Adding value labels
     for i, v in enumerate(data1):
         plt.text(i - 0.2, v + 5000, f"{v:.1f}", color=color1, ha='center', va='bottom', fontsize=9)
@@ -500,7 +500,7 @@ def water_spanish(fertilizer_amount,olivine_amount):
     #return 'https://test-cp.onrender.com/static/test.png'
     
     line_bot_api.reply_message(
-            reply_token
+            reply_token,
             ImageSendMessage(
                 original_content_url='https://test-cp.onrender.com/static/test.png',
                 preview_image_url='https://test-cp.onrender.com/static/test.png'
