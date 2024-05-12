@@ -20,7 +20,7 @@ from linebot.models import (
 from bs4 import BeautifulSoup
 from prettytable import PrettyTable
 
-app = Flask(__name__, static_url_path='https://test-cp.onrender.com/static/', static_folder='images')
+app = Flask(__name__, static_url_path='https://test-cp.onrender.com/static', static_folder='images')
 
 # Channel Access Token and Secret (Note: These should ideally be stored securely, not hardcoded)
 access_token = 'QFVheezi84Iy1z9+jhHfMAQLG7W2qtfs2BJVn18HVxt96WxxLzdGXzbdycnGiXkUk7g3wn7LIdmXbzuo7+s2mUX4I99hf2xSCq4ysfAHK/c8kpug7Vq6k458Js+An0XVhvNENn9Km2OuHL5cFhU9YQdB04t89/1O/w1cDnyilFU='
