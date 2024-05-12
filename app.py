@@ -20,7 +20,7 @@ from linebot.models import (
 from bs4 import BeautifulSoup
 from prettytable import PrettyTable
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='https://test-cp.onrender.com/images/', static_folder='images')
 
 # Channel Access Token and Secret (Note: These should ideally be stored securely, not hardcoded)
 access_token = 'QFVheezi84Iy1z9+jhHfMAQLG7W2qtfs2BJVn18HVxt96WxxLzdGXzbdycnGiXkUk7g3wn7LIdmXbzuo7+s2mUX4I99hf2xSCq4ysfAHK/c8kpug7Vq6k458Js+An0XVhvNENn9Km2OuHL5cFhU9YQdB04t89/1O/w1cDnyilFU='
@@ -468,33 +468,34 @@ def water_spanish(fertilizer_amount, olivine_amount):
     # for plotting the graph
     data1 = [total_cost_ex, veg_total_price_ex, 0, net_profit_ex]
     data2 = [total_cost, veg_total_price, carbon_price, net_profit]
-    description = f'原始農法 \n總成本: {data1[0]:.1f} \n農產品價格: {data1[1]:.1f} \n碳價格: {data1[2]:.1f} \n淨收益: {data1[3]:.1f} \n\n固碳農法 \n總成本: {data2[0]:.1f} \n農產品價格: {data2[1]:.1f} \n碳價格: {data2[2]:.1f} \n淨收益: {data2[3]:.1f}\n\n淨收益增長:{data2[3]-data1[3]:.1f}'
-    return description
-    #x = np.arange(len(data1))  # the label locations
+    #description = f'原始農法 \n總成本: {data1[0]:.1f} \n農產品價格: {data1[1]:.1f} \n碳價格: {data1[2]:.1f} \n淨收益: {data1[3]:.1f} \n\n固碳農法 \n總成本: {data2[0]:.1f} \n農產品價格: {data2[1]:.1f} \n碳價格: {data2[2]:.1f} \n淨收益: {data2[3]:.1f}\n\n淨收益增長:{data2[3]-data1[3]:.1f}'
+    #return description
+    x = np.arange(len(data1))  # the label locations
     
     # Define custom colors
-    #color1 = '#bf794e'
-    #color2 = '#00a381'
+    color1 = '#bf794e'
+    color2 = '#00a381'
     
-    #plt.bar(x - 0.2, data1, color=color1, width=0.35, align='center', edgecolor='black', label='只有添加肥料')
-    #plt.bar(x + 0.2, data2, color=color2, width=0.35, align='center', edgecolor='black', label='同時添加肥及橄欖砂')
+    plt.bar(x - 0.2, data1, color=color1, width=0.35, align='center', edgecolor='black', label='只有添加肥料')
+    plt.bar(x + 0.2, data2, color=color2, width=0.35, align='center', edgecolor='black', label='同時添加肥及橄欖砂')
     
-    #plt.xlabel('類別', fontsize=12)
-    #plt.ylabel('新臺幣', fontsize=12)
-    #plt.title('原始農法及固碳農法的成本效益比較', fontsize=14)
-    #plt.xticks(x, ['總共成本', '空心菜平均批發價', '碳權價格', '淨收益'], fontsize=10)
-    #plt.yticks(fontsize=10)
-    #plt.legend(fontsize=10)
+    plt.xlabel('類別', fontsize=12)
+    plt.ylabel('新臺幣', fontsize=12)
+    plt.title('原始農法及固碳農法的成本效益比較', fontsize=14)
+    plt.xticks(x, ['總共成本', '空心菜平均批發價', '碳權價格', '淨收益'], fontsize=10)
+    plt.yticks(fontsize=10)
+    plt.legend(fontsize=10)
     
     # Adding value labels
-    #for i, v in enumerate(data1):
-    #    plt.text(i - 0.2, v + 5000, str(v), color=color1, ha='center', va='bottom', fontsize=9)
-    #for i, v in enumerate(data2):
-    #    plt.text(i + 0.2, v + 5000, str(v), color=color2, ha='center', va='bottom', fontsize=9)
+    for i, v in enumerate(data1):
+        plt.text(i - 0.2, v + 5000, str(v), color=color1, ha='center', va='bottom', fontsize=9)
+    for i, v in enumerate(data2):
+        plt.text(i + 0.2, v + 5000, str(v), color=color2, ha='center', va='bottom', fontsize=9)
     
-    #plt.grid(axis='y', linestyle='--', alpha=0.7)
+    plt.grid(axis='y', linestyle='--', alpha=0.7)
+    plt.savefig(images/test.png)
+    return 'https://test-cp.onrender.com/images/test.png'
     
-    #plt.show()
   # Create a PrettyTable object with column headers
     #myTable = PrettyTable(['項目',"只有添加肥料", "有添加肥料及橄欖砂"])
 
