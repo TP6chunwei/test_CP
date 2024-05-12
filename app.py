@@ -581,8 +581,33 @@ def cabbage(fertilizer_amount, olivine_amount):
     data1 = [total_cost_ex, veg_total_price_ex, 0, net_profit_ex]
     data2 = [total_cost, veg_total_price, carbon_price, net_profit]
     # description = f'原始農法 \n總成本: {round(data1[0], 1)} \n農產品價格: {round(data1[1], 1)} \n碳價格: {round(data1[2], 1)} \n淨收益: {round(data1[3], 1)} \n\n固碳農法 \n總成本: {round(data2[0], 1)} \n農產品價格: {round(data2[1], 1)} \n碳價格: {round(data2[2], 1)} \n淨收益: {round(data2[3], 1)}\n\n淨收益增長:{round(data2[3]-data1[3], 1)}'
-    description = f'原始農法 \n總成本: {data1[0]:.1f} \n農產品價格: {data1[1]:.1f} \n碳價格: {data1[2]:.1f} \n淨收益: {data1[3]:.1f} \n\n固碳農法 \n總成本: {data2[0]:.1f} \n農產品價格: {data2[1]:.1f} \n碳價格: {data2[2]:.1f} \n淨收益: {data2[3]:.1f}\n\n淨收益增長:{data2[3]-data1[3]:.1f}'
-    return description
+    #description = f'原始農法 \n總成本: {data1[0]:.1f} \n農產品價格: {data1[1]:.1f} \n碳價格: {data1[2]:.1f} \n淨收益: {data1[3]:.1f} \n\n固碳農法 \n總成本: {data2[0]:.1f} \n農產品價格: {data2[1]:.1f} \n碳價格: {data2[2]:.1f} \n淨收益: {data2[3]:.1f}\n\n淨收益增長:{data2[3]-data1[3]:.1f}'
+    #return description
+    matplotlib.rc('font', family='Microsoft JhengHei')
+    x = np.arange(len(data1))  # the label locations
+    
+    # Define custom colors
+    color1 = '#bf794e'
+    color2 = '#00a381'
+    
+    plt.bar(x - 0.2, data1, color=color1, width=0.35, align='center', edgecolor='black', label='只有添加肥料')
+    plt.bar(x + 0.2, data2, color=color2, width=0.35, align='center', edgecolor='black', label='同時添加肥及橄欖砂')
+    
+    plt.xlabel('類別', fontsize=12)
+    plt.ylabel('新臺幣', fontsize=12)
+    plt.title('原始農法及固碳農法的成本效益比較', fontsize=14)
+    plt.xticks(x, ['總共成本', '高麗菜平均批發價', '碳權價格', '淨收益'], fontsize=10)
+    plt.yticks(fontsize=10)
+    plt.legend(fontsize=10)
+    #matplotlib.rc('font', family='Microsoft JhengHei')
+    # Adding value labels
+    for i, v in enumerate(data1):
+        plt.text(i - 0.2, v + 5000, f"{v:.1f}", color=color1, ha='center', va='bottom', fontsize=9)
+    for i, v in enumerate(data2):
+        plt.text(i + 0.2, v + 5000, f"{v:.1f}", color=color2, ha='center', va='bottom', fontsize=9)
+    
+    plt.grid(axis='y', linestyle='--', alpha=0.7)
+    plt.savefig('./images/test.png')
 
 def brocolli(fertilizer_amount,olivine_amount):
     fetilizer_amt = float(fertilizer_amount)
@@ -639,10 +664,34 @@ def brocolli(fertilizer_amount,olivine_amount):
     # for plotting the graph
     data1 = [total_cost_ex, veg_total_price_ex, 0, net_profit_ex]
     data2 = [total_cost, veg_total_price, carbon_price, net_profit]
-    description = f'原始農法 \n總成本: {data1[0]:.1f} \n農產品價格: {data1[1]:.1f} \n碳價格: {data1[2]:.1f} \n淨收益: {data1[3]:.1f} \n\n固碳農法 \n總成本: {data2[0]:.1f} \n農產品價格: {data2[1]:.1f} \n碳價格: {data2[2]:.1f} \n淨收益: {data2[3]:.1f}\n\n淨收益增長:{data2[3]-data1[3]:.1f}'
-    return description
+    #description = f'原始農法 \n總成本: {data1[0]:.1f} \n農產品價格: {data1[1]:.1f} \n碳價格: {data1[2]:.1f} \n淨收益: {data1[3]:.1f} \n\n固碳農法 \n總成本: {data2[0]:.1f} \n農產品價格: {data2[1]:.1f} \n碳價格: {data2[2]:.1f} \n淨收益: {data2[3]:.1f}\n\n淨收益增長:{data2[3]-data1[3]:.1f}'
+    #return description
 
-
+    matplotlib.rc('font', family='Microsoft JhengHei')
+    x = np.arange(len(data1))  # the label locations
+    
+    # Define custom colors
+    color1 = '#bf794e'
+    color2 = '#00a381'
+    
+    plt.bar(x - 0.2, data1, color=color1, width=0.35, align='center', edgecolor='black', label='只有添加肥料')
+    plt.bar(x + 0.2, data2, color=color2, width=0.35, align='center', edgecolor='black', label='同時添加肥及橄欖砂')
+    
+    plt.xlabel('類別', fontsize=12)
+    plt.ylabel('新臺幣', fontsize=12)
+    plt.title('原始農法及固碳農法的成本效益比較', fontsize=14)
+    plt.xticks(x, ['總共成本', '花椰菜平均批發價', '碳權價格', '淨收益'], fontsize=10)
+    plt.yticks(fontsize=10)
+    plt.legend(fontsize=10)
+    #matplotlib.rc('font', family='Microsoft JhengHei')
+    # Adding value labels
+    for i, v in enumerate(data1):
+        plt.text(i - 0.2, v + 5000, f"{v:.1f}", color=color1, ha='center', va='bottom', fontsize=9)
+    for i, v in enumerate(data2):
+        plt.text(i + 0.2, v + 5000, f"{v:.1f}", color=color2, ha='center', va='bottom', fontsize=9)
+    
+    plt.grid(axis='y', linestyle='--', alpha=0.7)
+    plt.savefig('./images/test.png')
 
 
 # Message handling
@@ -682,13 +731,25 @@ def handle_message(event):
                         #message = TextSendMessage(text=msg)
                         #line_bot_api.reply_message(event.reply_token, message)
                     elif crop_type == '高麗菜':
-                        msg = f'{cabbage(fertilizer_amount,olivine_amount)}'
-                        message = TextSendMessage(text=msg)
-                        line_bot_api.reply_message(event.reply_token, message)
+                        cabbage(fertilizer_amount,olivine_amount)
+                        message = ImageSendMessage(
+                        original_content_url='https://test-cp.onrender.com/static/test.png',
+                        preview_image_url='https://test-cp.onrender.com/static/test.png'
+                        )
+                        line_bot_api.reply_message(event.reply_token,message)
+                        #msg = f'{cabbage(fertilizer_amount,olivine_amount)}'
+                        #message = TextSendMessage(text=msg)
+                        #line_bot_api.reply_message(event.reply_token, message)
                     elif crop_type == '花椰菜':
-                        msg = f'{brocolli(fertilizer_amount,olivine_amount)}'
-                        message = TextSendMessage(text=msg)
-                        line_bot_api.reply_message(event.reply_token, message)
+                        brocolli(fertilizer_amount,olivine_amount)
+                        message = ImageSendMessage(
+                        original_content_url='https://test-cp.onrender.com/static/test.png',
+                        preview_image_url='https://test-cp.onrender.com/static/test.png'
+                        )
+                        line_bot_api.reply_message(event.reply_token,message)
+                        #msg = f'{brocolli(fertilizer_amount,olivine_amount)}'
+                        #message = TextSendMessage(text=msg)
+                        #line_bot_api.reply_message(event.reply_token, message)
                 else:
                     msg = '請輸入農產品的種類（空心菜，高麗菜，花椰菜），添加於「一公頃農地中的」肥料量以及橄欖石的量(以公斤為單位)，格式為農產品的種類，肥料量和橄欖石的量，並以英文逗號分隔'
                     message = TextSendMessage(text=msg)
