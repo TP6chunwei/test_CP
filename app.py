@@ -500,7 +500,7 @@ def water_spanish(fertilizer_amount,olivine_amount):
     #return 'https://test-cp.onrender.com/static/test.png'
     
     line_bot_api.reply_message(
-            fertilizer_amount,olivine_amount,
+            reply_token
             ImageSendMessage(
                 original_content_url='https://test-cp.onrender.com/static/test.png',
                 preview_image_url='https://test-cp.onrender.com/static/test.png'
