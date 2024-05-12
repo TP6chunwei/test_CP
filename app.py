@@ -682,7 +682,7 @@ def handle_message(event):
                         original_content_url='https://test-cp.onrender.com/static/test.png',
                         preview_image_url='https://test-cp.onrender.com/static/test.png'
                     )
-                    line_bot_api.reply_message(event.reply_token,message)
+                        line_bot_api.reply_message(event.reply_token,message)
                         #msg = f'{water_spanish(fertilizer_amount,olivine_amount)}'
                         #message = TextSendMessage(text=msg)
                         #line_bot_api.reply_message(event.reply_token, message)
