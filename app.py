@@ -491,9 +491,9 @@ def water_spanish(fertilizer_amount, olivine_amount):
     matplotlib.rc('font', family='Microsoft JhengHei')
     # Adding value labels
     for i, v in enumerate(data1):
-        plt.text(i - 0.2, v + 5000, str(v), color=color1, ha='center', va='bottom', fontsize=9)
+        plt.text(i - 0.2, v + 5000, f"{v:.1f}", color=color1, ha='center', va='bottom', fontsize=9)
     for i, v in enumerate(data2):
-        plt.text(i + 0.2, v + 5000, str(v), color=color2, ha='center', va='bottom', fontsize=9)
+        plt.text(i + 0.2, v + 5000, f"{v:.1f}", color=color2, ha='center', va='bottom', fontsize=9)
     
     plt.grid(axis='y', linestyle='--', alpha=0.7)
     plt.savefig('images/test.png')
