@@ -658,7 +658,7 @@ def handle_message(event):
     elif  event.message.type == 'text':
         msg = event.message.text
         if msg.lower() in ['雷達回波圖', '雷達回波', 'radar']:
-            reply_weather_image(event.reply_token)
+            reply_weather_image(reply_token)
         if msg in ['溫度分布', '溫度分布圖', '溫度分佈', '溫度分佈圖']:
             reply_temperature_image(event.reply_token)
         if msg == '成本效益':
