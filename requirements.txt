@@ -7,5 +7,4 @@ bs4
 prettytable
 input
 numpy
-random
-string
+
