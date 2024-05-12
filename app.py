@@ -502,8 +502,8 @@ def water_spanish(fertilizer_amount,olivine_amount):
     line_bot_api.reply_message(
             fertilizer_amount,olivine_amount,
             ImageSendMessage(
-                original_content_url=images/test.png,
-                preview_image_url=images/test.png
+                original_content_url=https://test-cp.onrender.com/static/test.png,
+                preview_image_url=https://test-cp.onrender.com/static/test.png
             )
         )
   # Create a PrettyTable object with column headers
