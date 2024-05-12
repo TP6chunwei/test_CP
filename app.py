@@ -722,8 +722,8 @@ def handle_message(event):
                     if crop_type == '空心菜':
                         water_spanish(fertilizer_amount,olivine_amount)
                         message = ImageSendMessage(
-                        original_content_url='https://test-cp.onrender.com/static/test.png',
-                        preview_image_url='https://test-cp.onrender.com/static/test.png'
+                        original_content_url='https://test-cp.onrender.com/static/test.png?{}',
+                        preview_image_url='https://test-cp.onrender.com/static/test.png?{}'
                         )
                         line_bot_api.reply_message(event.reply_token,message)
     
