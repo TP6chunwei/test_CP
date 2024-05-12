@@ -406,7 +406,7 @@ import pandas as pd
 def water_spanish(reply_token):
     fertilizer_amount = reply_token[1].strip()
     olivine_amount = reply_token[2].strip()
-    return fertilizer_amount
+    return reply_token[1]
   #   fetilizer_amt = float(fertilizer_amount)
   #   olivine_amt = float(olivine_amount)
     
