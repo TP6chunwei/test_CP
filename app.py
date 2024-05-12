@@ -19,6 +19,7 @@ from linebot.models import (
 )
 from bs4 import BeautifulSoup
 from prettytable import PrettyTable
+import matplotlib
 
 app = Flask(__name__, static_url_path='/static', static_folder='images')
 
@@ -470,6 +471,8 @@ def water_spanish(fertilizer_amount, olivine_amount):
     data2 = [total_cost, veg_total_price, carbon_price, net_profit]
     #description = f'原始農法 \n總成本: {data1[0]:.1f} \n農產品價格: {data1[1]:.1f} \n碳價格: {data1[2]:.1f} \n淨收益: {data1[3]:.1f} \n\n固碳農法 \n總成本: {data2[0]:.1f} \n農產品價格: {data2[1]:.1f} \n碳價格: {data2[2]:.1f} \n淨收益: {data2[3]:.1f}\n\n淨收益增長:{data2[3]-data1[3]:.1f}'
     #return description
+
+    matplotlib.rc('font', family='Microsoft JhengHei')
     x = np.arange(len(data1))  # the label locations
     
     # Define custom colors
