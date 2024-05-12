@@ -669,11 +669,11 @@ def handle_message(event):
         if ',' in msg:
             inputs = msg.split(',')
             if len(inputs) == 3:
-                #crop_type = inputs[0].strip()
+                crop_type = inputs[0].strip()
                 #fertilizer_amount = inputs[1].strip()
                 #olivine_amount = inputs[2].strip()
-                if msg.lower() in ['空心菜', '高麗菜', '花椰菜']:
-                    if msg.lower() in ['空心菜']:
+                if inputs in ['空心菜', '高麗菜', '花椰菜']:
+                    if inputs[0] == '空心菜':
                         #msg = f'{water_spanish(fertilizer_amount,olivine_amount)}'
                         water_spanish(event.reply_token)
                         #message = TextSendMessage(text=msg)
