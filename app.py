@@ -497,7 +497,7 @@ def water_spanish(fertilizer_amount,olivine_amount):
     
     plt.grid(axis='y', linestyle='--', alpha=0.7)
     plt.savefig('images/test.png')
-    url_pic = 'https://test-cp.onrender.com/static/test.png'
+    url_pic = f'https://test-cp.onrender.com/static/test.png'
     return url_pic
     
     #line_bot_api.reply_message(
