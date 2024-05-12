@@ -497,13 +497,10 @@ def water_spanish(fertilizer_amount,olivine_amount):
     
     plt.grid(axis='y', linestyle='--', alpha=0.7)
     plt.savefig('images/test.png')
-    messages = 'success'
     #return 'https://test-cp.onrender.com/static/test.png'
     
     line_bot_api.reply_message(
-           fertilizer_amount,
-        olivine_amount,
-        TextSendMessage(text=messages),
+           fertilizer_amount,olivine_amount,
            ImageSendMessage(
                original_content_url='https://test-cp.onrender.com/static/test.png',
                preview_image_url='https://test-cp.onrender.com/static/test.png'
