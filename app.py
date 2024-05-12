@@ -403,7 +403,9 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 
-def water_spanish(fertilizer_amount, olivine_amount):
+def water_spanish(reply_token):
+    fertilizer_amount = reply_token[1].strip()
+    olivine_amount = reply_token[2].strip()
     fetilizer_amt = float(fertilizer_amount)
     olivine_amt = float(olivine_amount)
     reply_token = [fetilizer_amt,olivine_amt]
@@ -667,13 +669,13 @@ def handle_message(event):
         if ',' in msg:
             inputs = msg.split(',')
             if len(inputs) == 3:
-                crop_type = inputs[0].strip()
-                fertilizer_amount = inputs[1].strip()
-                olivine_amount = inputs[2].strip()
-                if crop_type in ['空心菜', '高麗菜', '花椰菜']:
-                    if crop_type == '空心菜':
+                #crop_type = inputs[0].strip()
+                #fertilizer_amount = inputs[1].strip()
+                #olivine_amount = inputs[2].strip()
+                if msg.lower() in ['空心菜', '高麗菜', '花椰菜']:
+                    if msg.lower() in ['空心菜']:
                         #msg = f'{water_spanish(fertilizer_amount,olivine_amount)}'
-                        water_spanish(event.fertilizer_amount,event.olivine_amount)
+                        water_spanish(event.reply_token)
                         #message = TextSendMessage(text=msg)
                         
                         #line_bot_api.reply_message(event.reply_token, message)
