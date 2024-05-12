@@ -497,8 +497,7 @@ def water_spanish(fertilizer_amount,olivine_amount):
     
     plt.grid(axis='y', linestyle='--', alpha=0.7)
     plt.savefig('images/test.png')
-    url_pic = f'https://test-cp.onrender.com/static/test.png'
-    return url_pic
+    return 'https://test-cp.onrender.com/static/test.png'
     
     #line_bot_api.reply_message(
     #        reply_token,
@@ -674,8 +673,7 @@ def handle_message(event):
                 olivine_amount = inputs[2].strip()
                 if crop_type in ['空心菜', '高麗菜', '花椰菜']:
                     if crop_type == '空心菜':
-                        #water_spanish(event.reply_token)
-                        msg = f'{water_spanish(fertillizer_amount,olivine_amount)}'
+                        msg = f'{water_spanish(fertilizer_amount,olivine_amount)}'
                         message = TextSendMessage(text=msg)
                         line_bot_api.reply_message(event.reply_token, message)
                     elif crop_type == '高麗菜':
