@@ -408,7 +408,6 @@ def water_spanish(reply_token):
     olivine_amount = reply_token[2].strip()
     fetilizer_amt = float(fertilizer_amount)
     olivine_amt = float(olivine_amount)
-    reply_token = [fetilizer_amt,olivine_amt]
     
     url = 'https://www.twfood.cc/topic/vege/%E6%B0%B4%E7%94%9F%E9%A1%9E'  # Replace with the target URL
     response = requests.get(url)
