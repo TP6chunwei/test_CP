@@ -498,11 +498,11 @@ def water_spanish(fertilizer_amount,olivine_amount):
     plt.grid(axis='y', linestyle='--', alpha=0.7)
     plt.savefig('images/test.png')
     #return 'https://test-cp.onrender.com/static/test.png'
-    message = ImageSendMessage(
-               original_content_url='https://test-cp.onrender.com/static/test.png',
-               preview_image_url='https://test-cp.onrender.com/static/test.png'
-           )
-    line_bot_api.reply_message(event.reply_token,message)
+    #message = ImageSendMessage(
+    #           original_content_url='https://test-cp.onrender.com/static/test.png',
+    #           preview_image_url='https://test-cp.onrender.com/static/test.png'
+    #       )
+    #line_bot_api.reply_message(event.reply_token,message)
     
     #line_bot_api.reply_message(
     #       ImageSendMessage(
@@ -678,6 +678,11 @@ def handle_message(event):
                 if crop_type in ['空心菜', '高麗菜', '花椰菜']:
                     if crop_type == '空心菜':
                         water_spanish(event.fertilizer_amount,event.olivine_amount)
+                        message = ImageSendMessage(
+                        original_content_url='https://test-cp.onrender.com/static/test.png',
+                        preview_image_url='https://test-cp.onrender.com/static/test.png'
+                    )
+                    line_bot_api.reply_message(event.reply_token,message)
                         #msg = f'{water_spanish(fertilizer_amount,olivine_amount)}'
                         #message = TextSendMessage(text=msg)
                         #line_bot_api.reply_message(event.reply_token, message)
