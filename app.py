@@ -674,7 +674,7 @@ def handle_message(event):
                 if crop_type in ['空心菜', '高麗菜', '花椰菜']:
                     if crop_type == '空心菜':
                         #water_spanish(event.fertilizer_amount,event.olivine_amount)
-                        msg = f'{water_spanish(event.fertilizer_amount,event.olivine_amount)}'
+                        msg = f'{water_spanish(fertilizer_amount,olivine_amount)}'
                         message = TextSendMessage(text=msg)
                         line_bot_api.reply_message(event.reply_token, message)
                     elif crop_type == '高麗菜':
