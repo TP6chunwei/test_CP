@@ -482,6 +482,9 @@ def water_spanish(fertilizer_amount,olivine_amount):
     # Define custom colors
     color1 = '#bf794e'
     color2 = '#00a381'
+
+    fontManager.addfont('TaipeiSansTCBeta-Regular.ttf')
+    mpl.rc('font', family='Taipei Sans TC Beta')
     
     plt.bar(x - 0.2, data1, color=color1, width=0.35, align='center', edgecolor='black', label='只有添加肥料')
     plt.bar(x + 0.2, data2, color=color2, width=0.35, align='center', edgecolor='black', label='同時添加肥及橄欖砂')
