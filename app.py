@@ -757,7 +757,7 @@ def handle_message(event):
                         #msg = f'{water_spanish(fertilizer_amount,olivine_amount)}'
                         #message = TextSendMessage(text=msg)
                         #line_bot_api.reply_message(event.reply_token, message)
-                    elif crop_type == '高麗菜':
+                    if crop_type == '高麗菜':
                         random_string = cabbage(fertilizer_amount,olivine_amount)
                         message = ImageSendMessage(
                         original_content_url='https://test-cp.onrender.com/static/test.png?{random_string}',
@@ -767,7 +767,7 @@ def handle_message(event):
                         #msg = f'{cabbage(fertilizer_amount,olivine_amount)}'
                         #message = TextSendMessage(text=msg)
                         #line_bot_api.reply_message(event.reply_token, message)
-                    elif crop_type == '花椰菜':
+                    if crop_type == '花椰菜':
                         random_string = brocolli(fertilizer_amount,olivine_amount)
                         message = ImageSendMessage(
                         original_content_url='https://test-cp.onrender.com/static/test.png?{random_string}',
