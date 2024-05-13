@@ -497,7 +497,7 @@ def water_spanish(fertilizer_amount,olivine_amount):
     
     plt.grid(axis='y', linestyle='--', alpha=0.7)
     random_string = ''.join(random.choices(string.ascii_letters + string.digits, k=6))
-    plt.savefig(f'./images/test.png')
+    plt.savefig(f'./images/test.png?{random_string}')
     return random_string
     #return 'https://test-cp.onrender.com/static/test.png'
     
