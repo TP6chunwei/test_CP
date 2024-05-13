@@ -506,6 +506,7 @@ def water_spanish(fertilizer_amount,olivine_amount):
         plt.text(i + 0.2, v + 5000, f"{v:.1f}", color=color2, ha='center', va='bottom', fontsize=9)
     
     plt.grid(axis='y', linestyle='--', alpha=0.7)
+
     random_string = ''.join(random.choices(string.ascii_letters + string.digits, k=6))
     plt.savefig(f'./images/test.png')
     plt.clf()
@@ -597,12 +598,15 @@ def cabbage(fertilizer_amount, olivine_amount):
     # description = f'原始農法 \n總成本: {round(data1[0], 1)} \n農產品價格: {round(data1[1], 1)} \n碳價格: {round(data1[2], 1)} \n淨收益: {round(data1[3], 1)} \n\n固碳農法 \n總成本: {round(data2[0], 1)} \n農產品價格: {round(data2[1], 1)} \n碳價格: {round(data2[2], 1)} \n淨收益: {round(data2[3], 1)}\n\n淨收益增長:{round(data2[3]-data1[3], 1)}'
     #description = f'原始農法 \n總成本: {data1[0]:.1f} \n農產品價格: {data1[1]:.1f} \n碳價格: {data1[2]:.1f} \n淨收益: {data1[3]:.1f} \n\n固碳農法 \n總成本: {data2[0]:.1f} \n農產品價格: {data2[1]:.1f} \n碳價格: {data2[2]:.1f} \n淨收益: {data2[3]:.1f}\n\n淨收益增長:{data2[3]-data1[3]:.1f}'
     #return description
-    matplotlib.rc('font', family='Microsoft JhengHei')
+    #matplotlib.rc('font', family='Microsoft JhengHei')
     x = np.arange(len(data1))  # the label locations
     
     # Define custom colors
     color1 = '#bf794e'
     color2 = '#00a381'
+    
+    fontManager.addfont('TaipeiSansTCBeta-Regular.ttf')
+    mpl.rc('font', family='Taipei Sans TC Beta')
     
     plt.bar(x - 0.2, data1, color=color1, width=0.35, align='center', edgecolor='black', label='只有添加肥料')
     plt.bar(x + 0.2, data2, color=color2, width=0.35, align='center', edgecolor='black', label='同時添加肥及橄欖砂')
@@ -621,7 +625,12 @@ def cabbage(fertilizer_amount, olivine_amount):
         plt.text(i + 0.2, v + 5000, f"{v:.1f}", color=color2, ha='center', va='bottom', fontsize=9)
     
     plt.grid(axis='y', linestyle='--', alpha=0.7)
-    plt.savefig('./images/test.png')
+
+    random_string = ''.join(random.choices(string.ascii_letters + string.digits, k=6))
+    plt.savefig(f'./images/test.png')
+    plt.clf()
+    return random_string
+
 
 def brocolli(fertilizer_amount,olivine_amount):
     fetilizer_amt = float(fertilizer_amount)
@@ -681,7 +690,7 @@ def brocolli(fertilizer_amount,olivine_amount):
     #description = f'原始農法 \n總成本: {data1[0]:.1f} \n農產品價格: {data1[1]:.1f} \n碳價格: {data1[2]:.1f} \n淨收益: {data1[3]:.1f} \n\n固碳農法 \n總成本: {data2[0]:.1f} \n農產品價格: {data2[1]:.1f} \n碳價格: {data2[2]:.1f} \n淨收益: {data2[3]:.1f}\n\n淨收益增長:{data2[3]-data1[3]:.1f}'
     #return description
 
-    matplotlib.rc('font', family='Microsoft JhengHei')
+    #matplotlib.rc('font', family='Microsoft JhengHei')
     x = np.arange(len(data1))  # the label locations
     
     # Define custom colors
@@ -706,7 +715,10 @@ def brocolli(fertilizer_amount,olivine_amount):
         plt.text(i + 0.2, v + 5000, f"{v:.1f}", color=color2, ha='center', va='bottom', fontsize=9)
     
     plt.grid(axis='y', linestyle='--', alpha=0.7)
-    plt.savefig('./images/test.png')
+    random_string = ''.join(random.choices(string.ascii_letters + string.digits, k=6))
+    plt.savefig(f'./images/test.png')
+    plt.clf()
+    return random_string
 
 
 # Message handling
@@ -747,20 +759,20 @@ def handle_message(event):
                         #message = TextSendMessage(text=msg)
                         #line_bot_api.reply_message(event.reply_token, message)
                     elif crop_type == '高麗菜':
-                        cabbage(fertilizer_amount,olivine_amount)
+                        random_string = cabbage(fertilizer_amount,olivine_amount)
                         message = ImageSendMessage(
-                        original_content_url='https://test-cp.onrender.com/static/test.png',
-                        preview_image_url='https://test-cp.onrender.com/static/test.png'
+                        original_content_url='https://test-cp.onrender.com/static/test.png?{random_string}',
+                        preview_image_url='https://test-cp.onrender.com/static/test.png?{random_string}'
                         )
                         line_bot_api.reply_message(event.reply_token,message)
                         #msg = f'{cabbage(fertilizer_amount,olivine_amount)}'
                         #message = TextSendMessage(text=msg)
                         #line_bot_api.reply_message(event.reply_token, message)
                     elif crop_type == '花椰菜':
-                        brocolli(fertilizer_amount,olivine_amount)
+                        random_string = brocolli(fertilizer_amount,olivine_amount)
                         message = ImageSendMessage(
-                        original_content_url='https://test-cp.onrender.com/static/test.png',
-                        preview_image_url='https://test-cp.onrender.com/static/test.png'
+                        original_content_url='https://test-cp.onrender.com/static/test.png?{random_string}',
+                        preview_image_url='https://test-cp.onrender.com/static/test.png?{random_string}'
                         )
                         line_bot_api.reply_message(event.reply_token,message)
                         #msg = f'{brocolli(fertilizer_amount,olivine_amount)}'
