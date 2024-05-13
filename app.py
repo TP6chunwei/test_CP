@@ -760,8 +760,8 @@ def handle_message(event):
                     if crop_type == '高麗菜':
                         random_string = cabbage(fertilizer_amount,olivine_amount)
                         message = ImageSendMessage(
-                        original_content_url='https://test-cp.onrender.com/static/test.png?{random_string}',
-                        preview_image_url='https://test-cp.onrender.com/static/test.png?{random_string}'
+                        original_content_url=f'https://test-cp.onrender.com/static/test.png?{random_string}',
+                        preview_image_url=f'https://test-cp.onrender.com/static/test.png?{random_string}'
                         )
                         line_bot_api.reply_message(event.reply_token,message)
                         #msg = f'{cabbage(fertilizer_amount,olivine_amount)}'
@@ -770,8 +770,8 @@ def handle_message(event):
                     if crop_type == '花椰菜':
                         random_string = brocolli(fertilizer_amount,olivine_amount)
                         message = ImageSendMessage(
-                        original_content_url='https://test-cp.onrender.com/static/test.png?{random_string}',
-                        preview_image_url='https://test-cp.onrender.com/static/test.png?{random_string}'
+                        original_content_url=f'https://test-cp.onrender.com/static/test.png?{random_string}',
+                        preview_image_url=f'https://test-cp.onrender.com/static/test.png?{random_string}'
                         )
                         line_bot_api.reply_message(event.reply_token,message)
                         #msg = f'{brocolli(fertilizer_amount,olivine_amount)}'
