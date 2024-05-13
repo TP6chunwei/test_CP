@@ -47,7 +47,10 @@ def callback():
     except InvalidSignatureError:
         abort(400)
     return 'OK'
-    
+
+fontManager.addfont('TaipeiSansTCBeta-Regular.ttf')
+mpl.rc('font', family='Taipei Sans TC Beta')
+
 # 目前天氣資訊
 def current_weather(address):
     city_list, town_list, town_list2 = {}, {}, {}
