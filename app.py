@@ -496,7 +496,8 @@ def water_spanish(fertilizer_amount,olivine_amount):
         plt.text(i + 0.2, v + 5000, f"{v:.1f}", color=color2, ha='center', va='bottom', fontsize=9)
     
     plt.grid(axis='y', linestyle='--', alpha=0.7)
-    plt.savefig('./images/test.png')
+    plt.savefig('./images/test.png?{random_string}')
+    return random_string
     #return 'https://test-cp.onrender.com/static/test.png'
     
     #line_bot_api.reply_message(
@@ -723,8 +724,8 @@ def handle_message(event):
                     if crop_type == '空心菜':
                         water_spanish(fertilizer_amount,olivine_amount)
                         message = ImageSendMessage(
-                        original_content_url='https://test-cp.onrender.com/static/test.png',
-                        preview_image_url='https://test-cp.onrender.com/static/test.png'
+                        original_content_url='https://test-cp.onrender.com/static/test.png?{random_string}',
+                        preview_image_url='https://test-cp.onrender.com/static/test.png?{random_string}'
                         )
                         line_bot_api.reply_message(event.reply_token,message)
     
@@ -734,8 +735,8 @@ def handle_message(event):
                     elif crop_type == '高麗菜':
                         cabbage(fertilizer_amount,olivine_amount)
                         message = ImageSendMessage(
-                        original_content_url='https://test-cp.onrender.com/static/test.png?{random_string}',
-                        preview_image_url='https://test-cp.onrender.com/static/test.png?{random_string}'
+                        original_content_url='https://test-cp.onrender.com/static/test.png',
+                        preview_image_url='https://test-cp.onrender.com/static/test.png'
                         )
                         line_bot_api.reply_message(event.reply_token,message)
                         #msg = f'{cabbage(fertilizer_amount,olivine_amount)}'
