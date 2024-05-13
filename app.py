@@ -471,7 +471,7 @@ def water_spanish(fertilizer_amount,olivine_amount):
     data2 = [total_cost, veg_total_price, carbon_price, net_profit]
     #description = f'原始農法 \n總成本: {data1[0]:.1f} \n農產品價格: {data1[1]:.1f} \n碳價格: {data1[2]:.1f} \n淨收益: {data1[3]:.1f} \n\n固碳農法 \n總成本: {data2[0]:.1f} \n農產品價格: {data2[1]:.1f} \n碳價格: {data2[2]:.1f} \n淨收益: {data2[3]:.1f}\n\n淨收益增長:{data2[3]-data1[3]:.1f}'
     #return description
-    random_string = ''.join(random.choices(string.ascii_letters + string.digits, k=6))
+    
     matplotlib.rc('font', family='Microsoft JhengHei')
     x = np.arange(len(data1))  # the label locations
     
@@ -496,7 +496,8 @@ def water_spanish(fertilizer_amount,olivine_amount):
         plt.text(i + 0.2, v + 5000, f"{v:.1f}", color=color2, ha='center', va='bottom', fontsize=9)
     
     plt.grid(axis='y', linestyle='--', alpha=0.7)
-    plt.savefig(f'./images/test.png?{random_string}')
+    random_string = ''.join(random.choices(string.ascii_letters + string.digits, k=6))
+    plt.savefig(f'./images/test.png')
     return random_string
     #return 'https://test-cp.onrender.com/static/test.png'
     
