@@ -497,7 +497,7 @@ def water_spanish(fertilizer_amount,olivine_amount):
         plt.text(i + 0.2, v + 5000, f"{v:.1f}", color=color2, ha='center', va='bottom', fontsize=9)
     
     plt.grid(axis='y', linestyle='--', alpha=0.7)
-    plt.savefig('./images/test.png?{random_string}')
+    plt.savefig(f'./images/test.png?{random_string}')
     return random_string
     #return 'https://test-cp.onrender.com/static/test.png'
     
@@ -726,8 +726,8 @@ def handle_message(event):
                         #water_spanish(fertilizer_amount,olivine_amount)
                         random_string = water_spanish(fertilizer_amount,olivine_amount)
                         message = ImageSendMessage(
-                        original_content_url='https://test-cp.onrender.com/static/test.png?{random_string}',
-                        preview_image_url='https://test-cp.onrender.com/static/test.png?{random_string}'
+                        original_content_url=f'https://test-cp.onrender.com/static/test.png?{random_string}',
+                        preview_image_url=f'https://test-cp.onrender.com/static/test.png?{random_string}'
                         )
                         line_bot_api.reply_message(event.reply_token,message)
     
