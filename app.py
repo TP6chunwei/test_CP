@@ -722,7 +722,7 @@ def handle_message(event):
                 olivine_amount = inputs[2].strip()
                 if crop_type in ['空心菜', '高麗菜', '花椰菜']:
                     if crop_type == '空心菜':
-                        water_spanish(fertilizer_amount,olivine_amount)
+                        #water_spanish(fertilizer_amount,olivine_amount)
                         random_string = water_spanish(fertilizer_amount,olivine_amount)
                         message = ImageSendMessage(
                         original_content_url='https://test-cp.onrender.com/static/test.png?{random_string}',
