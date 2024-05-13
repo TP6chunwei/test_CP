@@ -19,9 +19,12 @@ from linebot.models import (
 )
 from bs4 import BeautifulSoup
 from prettytable import PrettyTable
-import matplotlib
 import random
 import string
+import matplotlib as mpl
+from matplotlib.font_manager import fontManager
+
+
 app = Flask(__name__, static_url_path='/static', static_folder='images')
 
 # Channel Access Token and Secret (Note: These should ideally be stored securely, not hardcoded)
@@ -678,7 +681,8 @@ def brocolli(fertilizer_amount,olivine_amount):
     # Define custom colors
     color1 = '#bf794e'
     color2 = '#00a381'
-    
+    fontManager.addfont('TaipeiSansTCBeta-Regular.ttf')
+    mpl.rc('font', family='Taipei Sans TC Beta')
     plt.bar(x - 0.2, data1, color=color1, width=0.35, align='center', edgecolor='black', label='只有添加肥料')
     plt.bar(x + 0.2, data2, color=color2, width=0.35, align='center', edgecolor='black', label='同時添加肥及橄欖砂')
     
@@ -688,7 +692,7 @@ def brocolli(fertilizer_amount,olivine_amount):
     plt.xticks(x, ['總共成本', '花椰菜平均批發價', '碳權價格', '淨收益'], fontsize=10)
     plt.yticks(fontsize=10)
     plt.legend(fontsize=10)
-    #matplotlib.rc('font', family='Microsoft JhengHei')
+
     # Adding value labels
     for i, v in enumerate(data1):
         plt.text(i - 0.2, v + 5000, f"{v:.1f}", color=color1, ha='center', va='bottom', fontsize=9)
