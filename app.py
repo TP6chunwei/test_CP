@@ -1,6 +1,7 @@
 from flask import Flask, request, abort
 import os
 import numpy as np
+import numpy as np
 import requests
 import json
 import pandas as pd
