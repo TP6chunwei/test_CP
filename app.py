@@ -534,7 +534,7 @@ def water_spanish(fertilizer_amount,olivine_amount):
     plt.title('原始農法及固碳農法的成本效益比較', fontsize=24)
     plt.xticks(x, ['總共成本', '空心菜平均批發價', '碳權價格', '淨收益'], fontsize=18)
     plt.yticks(fontsize=18)
-    plt.legend(fontsize=16)
+    plt.legend(fontsize=18)
     #matplotlib.rc('font', family='Microsoft JhengHei')
     # Adding value labels
     for i, v in enumerate(data1):
@@ -644,24 +644,25 @@ def cabbage(fertilizer_amount, olivine_amount):
     
     fontManager.addfont('TaipeiSansTCBeta-Regular.ttf')
     mpl.rc('font', family='Taipei Sans TC Beta')
-    
+    fig, ax = plt.subplots(figsize=(12, 6))
     plt.bar(x - 0.2, data1, color=color1, width=0.35, align='center', edgecolor='black', label='只有添加肥料')
     plt.bar(x + 0.2, data2, color=color2, width=0.35, align='center', edgecolor='black', label='同時添加肥及橄欖砂')
     
-    plt.xlabel('類別', fontsize=12)
-    plt.ylabel('新臺幣', fontsize=12)
-    plt.title('原始農法及固碳農法的成本效益比較', fontsize=14)
-    plt.xticks(x, ['總共成本', '高麗菜平均批發價', '碳權價格', '淨收益'], fontsize=10)
-    plt.yticks(fontsize=10)
-    plt.legend(fontsize=10)
+    plt.xlabel('類別', fontsize=20)
+    plt.ylabel('新臺幣', fontsize=24)
+    plt.title('原始農法及固碳農法的成本效益比較', fontsize=24)
+    plt.xticks(x, ['總共成本', '高麗菜平均批發價', '碳權價格', '淨收益'], fontsize=18)
+    plt.yticks(fontsize=18)
+    plt.legend(fontsize=18)
     #matplotlib.rc('font', family='Microsoft JhengHei')
     # Adding value labels
     for i, v in enumerate(data1):
-        plt.text(i - 0.2, v + 5000, f"{v:.1f}", color=color1, ha='center', va='bottom', fontsize=9)
+        plt.text(i - 0.2, v + 5000, f"{v:.1f}", color=color1, ha='center', va='bottom', fontsize=14)
     for i, v in enumerate(data2):
-        plt.text(i + 0.2, v + 5000, f"{v:.1f}", color=color2, ha='center', va='bottom', fontsize=9)
+        plt.text(i + 0.2, v + 5000, f"{v:.1f}", color=color2, ha='center', va='bottom', fontsize=14)
     
     plt.grid(axis='y', linestyle='--', alpha=0.7)
+    ax.text(0.75, 0.7, f'淨收益增長:{net_net:.1f}', transform=ax.transAxes, fontsize=18, ha='right',color='red')
 
     random_string = ''.join(random.choices(string.ascii_letters + string.digits, k=6))
     plt.savefig(f'./images/test.png')
@@ -735,23 +736,25 @@ def brocolli(fertilizer_amount,olivine_amount):
     color2 = '#00a381'
     fontManager.addfont('TaipeiSansTCBeta-Regular.ttf')
     mpl.rc('font', family='Taipei Sans TC Beta')
+    fig, ax = plt.subplots(figsize=(12, 6))
     plt.bar(x - 0.2, data1, color=color1, width=0.35, align='center', edgecolor='black', label='只有添加肥料')
     plt.bar(x + 0.2, data2, color=color2, width=0.35, align='center', edgecolor='black', label='同時添加肥及橄欖砂')
     
-    plt.xlabel('類別', fontsize=12)
-    plt.ylabel('新臺幣', fontsize=12)
-    plt.title('原始農法及固碳農法的成本效益比較', fontsize=14)
-    plt.xticks(x, ['總共成本', '花椰菜平均批發價', '碳權價格', '淨收益'], fontsize=10)
-    plt.yticks(fontsize=10)
-    plt.legend(fontsize=10)
+    plt.xlabel('類別', fontsize=20)
+    plt.ylabel('新臺幣', fontsize=24)
+    plt.title('原始農法及固碳農法的成本效益比較', fontsize=24)
+    plt.xticks(x, ['總共成本', '花椰菜平均批發價', '碳權價格', '淨收益'], fontsize=18)
+    plt.yticks(fontsize=18)
+    plt.legend(fontsize=16)
 
     # Adding value labels
     for i, v in enumerate(data1):
-        plt.text(i - 0.2, v + 5000, f"{v:.1f}", color=color1, ha='center', va='bottom', fontsize=9)
+        plt.text(i - 0.2, v + 5000, f"{v:.1f}", color=color1, ha='center', va='bottom', fontsize=14)
     for i, v in enumerate(data2):
-        plt.text(i + 0.2, v + 5000, f"{v:.1f}", color=color2, ha='center', va='bottom', fontsize=9)
+        plt.text(i + 0.2, v + 5000, f"{v:.1f}", color=color2, ha='center', va='bottom', fontsize=14)
     
     plt.grid(axis='y', linestyle='--', alpha=0.7)
+    ax.text(0.75, 0.7, f'淨收益增長:{net_net:.1f}', transform=ax.transAxes, fontsize=18, ha='right',color='red')
     random_string = ''.join(random.choices(string.ascii_letters + string.digits, k=6))
     plt.savefig(f'./images/test.png')
     plt.clf()
