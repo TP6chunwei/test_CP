@@ -379,7 +379,7 @@ def forecast_weather_images(df):
     axs[1].set_title('未來一週溫度預測', fontsize = 18)
     axs[1].set_xlabel('日期', fontsize = 16)
     axs[1].set_ylabel('溫度 (°C)', fontsize = 16)
-    axs[1].legend()
+    axs[1].legend(['最高溫', '最低溫', '平均氣溫'], fontsize = 10)
     axs[1].grid(True)
     plt.tight_layout()
 
