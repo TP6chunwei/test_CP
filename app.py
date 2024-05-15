@@ -367,18 +367,18 @@ def forecast_weather_images(df):
 
     # Plot PoP12h
     axs[0].plot(df['Date'], df['PoP12h'], marker='o', linestyle='-', color='purple')
-    axs[0].set_title('Probability of Precipitation (PoP12h)')
-    axs[0].set_xlabel('Date')
-    axs[0].set_ylabel('PoP12h (%)')
+    axs[0].set_title('未來一週降雨機率預測', fontsize = '18')
+    axs[0].set_xlabel('日期', fontsize = '16')
+    axs[0].set_ylabel('機率 (%)', fontsize = '16')
     axs[0].grid(True)
     
     # Plot MaxT, MinT, and T
     axs[1].plot(df['Date'], df['MaxT'], marker='o', linestyle='-', label='MaxT', color='r')
     axs[1].plot(df['Date'], df['MinT'], marker='o', linestyle='-', label='MinT', color='b')
     axs[1].plot(df['Date'], df['T'], marker='o', linestyle='-', label='T', color='y')
-    axs[1].set_title('Temperature Data')
-    axs[1].set_xlabel('Date')
-    axs[1].set_ylabel('Temperature (°C)')
+    axs[1].set_title('未來一週溫度預測', fontsize = '18')
+    axs[1].set_xlabel('日期')
+    axs[1].set_ylabel('溫度 (°C)')
     axs[1].legend()
     axs[1].grid(True)
 
