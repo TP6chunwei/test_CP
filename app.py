@@ -543,7 +543,7 @@ def water_spanish(fertilizer_amount,olivine_amount):
         plt.text(i + 0.2, v + 5000, f"{v:.1f}", color=color2, ha='center', va='bottom', fontsize=14)
     
     plt.grid(axis='y', linestyle='--', alpha=0.7)
-    #ax.text(0.75, 0.7, f'淨收益增長:{net_net:.1f}', transform=ax.transAxes, fontsize=18, ha='right',color='red')
+    ax.text(0.75, 0.7, f'淨收益增長:{net_net:.1f}', transform=ax.transAxes, fontsize=18, ha='right',color='red')
     random_string = ''.join(random.choices(string.ascii_letters + string.digits, k=6))
     plt.savefig(f'./images/test.png')
     plt.clf()
