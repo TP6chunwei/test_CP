@@ -222,134 +222,6 @@ def reply_weather_image(reply_token):
     except Exception as e:
         print(f"Error replying with weather image: {e}")
 
-# # 未來一週氣象預報
-# def forecast_weather_data():
-#     try:
-#         code = 'CWA-371EFA85-E086-45AE-B068-E449E4478D6A'
-#         url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-091?Authorization={code}&format=JSON'
-#         r = requests.get(url)
-#         # Parse
-#         data = pd.read_json(r.text)
-#         data = data.loc['locations', 'records']
-#         data = data[0]['location']
-        
-#         aggregated_data = {
-#             'PoP12h': {}, # 未來12小時降雨機率
-#             'T': {}, # 平均溫度
-#             'MaxT': {}, # 最高溫度
-#             'MinT': {} # 最低溫度
-#         }
-#         element_lists = [i for i in aggregated_data.keys()]
-#         for loc_data in data:
-#             loc_name = loc_data['locationName'] # 縣市
-#             weather_data = loc_data['weatherElement'] # 項目
-#             for element in weather_data:
-#               ele_name = element['elementName']
-#               if ele_name in element_lists:
-#                 for entry in element['time']:
-#                   start_time = entry['startTime'][:10]  # Extract the date
-#                   value = entry['elementValue'][0]['value']
-#                   if value.strip():  # Check if value is not empty
-#                     value = float(value)
-#                   else:
-#                     value = 0.0
-#                   # Store the value for each location, weather element, and start time
-#                   if start_time not in aggregated_data[ele_name]:
-#                     aggregated_data[ele_name][start_time] = {}
-#                   if loc_name not in aggregated_data[ele_name][start_time]:
-#                     aggregated_data[ele_name][start_time][loc_name] = 0.0
-#                   aggregated_data[ele_name][start_time][loc_name] += value
-                    
-#         # Divide each value by 2 after all values have been added
-#         for ele_name in aggregated_data:
-#             for start_time in aggregated_data[ele_name]:
-#               for loc_name in aggregated_data[ele_name][start_time]:
-#                 aggregated_data[ele_name][start_time][loc_name] /= 2   
-        
-#         return aggregated_data
-
-#     except Exception as e:
-#         print(e)
-
-# def forecast_weather_description(aggregated_data, address):
-#   try:
-#     county_names = ["臺北市", "新北市", "基隆市", "桃園市", "新竹縣", "新竹市", "苗栗縣", 
-#                     "臺中市", "彰化縣", "南投縣", "雲林縣", "嘉義縣", "嘉義市", "臺南市", 
-#                     "高雄市", "屏東縣", "宜蘭縣", "花蓮縣", "臺東縣", "澎湖縣", "金門縣", "連江縣"]
-    
-#     for county in county_names:
-#       if county in address:
-#         city = county
-#     bundles = {
-#         'PoP12h': [],
-#         'T': [],
-#         'MaxT': [],
-#         'MinT': []
-#     }
-#     date_lists = []
-
-#     for i in bundles.keys():
-#       for element, location_data in aggregated_data.items():
-#         if element == i:
-#           for date, info in location_data.items():
-#             value = info[city]
-#             bundles[element].append(value)
-#             if date not in date_lists:
-#               date_lists.append(date)
-
-#     df = pd.DataFrame(bundles)
-#     df['Date'] = pd.to_datetime(date_lists)
-#     df.set_index('Date', inplace=True)
-
-#     # Find the max value for PoP12h
-#     pop_max = df['PoP12h'].max()
-#     pop_maxidx = df['PoP12h'].idxmax()
-#     pop_message = f'{pop_maxidx.month}/{pop_maxidx.day}達{pop_max}%'
-
-#     # Find the max value for MaxT
-#     T_max = df['MaxT'].max()
-#     T_maxidx = df['MaxT'].idxmax()
-#     # Using Unicode character for Celsius symbol
-#     celsius_symbol = '\u00B0C'
-#     maxT_message = f'{T_maxidx.month}/{T_maxidx.day}達{T_max}{celsius_symbol}，'
-
-#     # Find the minimum value for MinT
-#     T_min = df['MinT'].min()
-#     T_minidx = df['MinT'].idxmin()
-#     minT_message = f'{T_minidx.month}/{T_minidx.day}達{T_min}{celsius_symbol}，'
-
-#     # Calculate for average temperature
-#     ave_t = round(df['T'].mean(), 2)
-#     ave_message = f'{ave_t}{celsius_symbol}，'
-
-#     # suggestion
-#     if ave_t >= 25.0 and (df['PoP12h'] >= 60).any():
-#         advice = '未來一週高溫且多雨，請注意熱害與排水'
-#     elif ave_t >= 25.0 and ((df['PoP12h'] < 60) & (df['PoP12h'] >= 30)).any():
-#         advice = '未來一週高溫且多雨，請注意熱害'
-#     elif ave_t >= 25.0 and (df['PoP12h'] <= 30).all():
-#         advice = '未來一週高溫而少雨，請注意熱害與灌溉'
-
-#     elif 15 <= ave_t < 25 and (df['PoP12h'] >= 60).any():
-#         advice = '未來一週溫度適中而多雨，請注意排水'
-#     elif 15 <= ave_t < 25 and ((df['PoP12h'] < 60) & (df['PoP12h'] >= 30)).any():
-#         advice = '未來一週溫度、雨量適中'
-#     elif 15 <= ave_t < 25 and (df['PoP12h'] <= 30).all():
-#         advice = '未來一週溫度適中而少雨，請注意灌溉'
-
-#     elif ave_t < 15 and (df['PoP12h'] >= 60).any():
-#         advice = '未來一週低溫且多雨，請注意寒害與排水'
-#     elif ave_t < 15 and ((df['PoP12h'] < 60) & (df['PoP12h'] >= 30)).any():
-#         advice = '未來一週低溫而雨量適中，請注意寒害'
-#     elif ave_t < 15 and (df['PoP12h'] <= 30).all():
-#         advice = '未來一週低溫而少雨，請注意寒害與灌溉'
-
-#     description = f'未來一週氣象預測:\n平均氣溫{ave_message}最高溫預計發生於{maxT_message}最低溫預計發生於{minT_message}最高降雨機率預計發生於{pop_message}\n\n{advice}'.strip('，')
-#     return description
-
-#   except Exception as e:
-#     return e
-
 # 未來一週預測氣象資訊
 def forecast_weather_data(address):
     try:
@@ -483,7 +355,7 @@ def forecast_weather_description(df):
         advice = '未來一週低溫而少雨，請注意寒害與灌溉'
 
 
-    description = f'未來一週氣象預測:\n平均氣溫{ave_message}\n最高溫預計發生於{maxT_message}\n最低溫預計發生於{minT_message}\n最高降雨機率預計發生於{pop_message}\n{advice}'
+    description = f'未來一週氣象預測:\n平均氣溫{ave_message}\n最高溫預計發生於{maxT_message}\n最低溫預計發生於{minT_message}\n最高降雨機率預計發生於{pop_message}\n\n{advice}'
     return description
 
   except Exception as e:
@@ -864,7 +736,7 @@ def brocolli(fertilizer_amount,olivine_amount):
 def handle_message(event):
     if event.message.type == 'location':
         address = event.message.address.replace('台', '臺')
-        msg = f'{address}\n\n{past_weather(address)}\n\n{current_weather(address)}\n{warning(address)}\n\n{forecast_weather_description(forecast_weather_data(address))}'
+        msg = f'{address}\n\n{past_weather(address)}\n\n{current_weather(address)}\n\n{warning(address)}\n\n{forecast_weather_description(forecast_weather_data(address))}'
         message = TextSendMessage(text=msg)
         line_bot_api.reply_message(event.reply_token, message)    
     elif  event.message.type == 'text':
