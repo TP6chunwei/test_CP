@@ -360,7 +360,33 @@ def forecast_weather_description(df):
 
   except Exception as e:
     return e
+
+# 未來一週氣象預測圖表
+def forecast_weather_images(df):
+    fig, axs = plt.subplots(2, 1, figsize=(10, 10))
+
+    # Plot PoP12h
+    axs[0].plot(df['Date'], df['PoP12h'], marker='o', linestyle='-', color='purple')
+    axs[0].set_title('Probability of Precipitation (PoP12h)')
+    axs[0].set_xlabel('Date')
+    axs[0].set_ylabel('PoP12h (%)')
+    axs[0].grid(True)
     
+    # Plot MaxT, MinT, and T
+    axs[1].plot(df['Date'], df['MaxT'], marker='o', linestyle='-', label='MaxT', color='r')
+    axs[1].plot(df['Date'], df['MinT'], marker='o', linestyle='-', label='MinT', color='b')
+    axs[1].plot(df['Date'], df['T'], marker='o', linestyle='-', label='T', color='y')
+    axs[1].set_title('Temperature Data')
+    axs[1].set_xlabel('Date')
+    axs[1].set_ylabel('Temperature (°C)')
+    axs[1].legend()
+    axs[1].grid(True)
+
+    random_string = ''.join(random.choices(string.ascii_letters + string.digits, k=6))
+     # Save the plot as one image
+    plt.savefig(f'./images/test_{random_string}.png')
+    plt.clf()
+    return random_string
 
 # 過去一個月的氣象資訊
 def past_weather(address):
@@ -738,7 +764,14 @@ def handle_message(event):
         address = event.message.address.replace('台', '臺')
         msg = f'{address}\n\n{past_weather(address)}\n\n{current_weather(address)}\n\n{warning(address)}\n\n{forecast_weather_description(forecast_weather_data(address))}'
         message = TextSendMessage(text=msg)
-        line_bot_api.reply_message(event.reply_token, message)    
+        # reply images
+        random_string = forecast_weather_images(forecast_weather_data(address))
+        message2 = ImageSendMessage(
+            original_content_url=f'https://test-cp.onrender.com/static/test.png?{random_string}',
+            preview_image_url=f'https://test-cp.onrender.com/static/test.png?{random_string}'
+            )
+        line_bot_api.reply_message(event.reply_token, message)  
+        line_bot_api.reply_message(event.reply_token, message2)
     elif  event.message.type == 'text':
         msg = event.message.text
         if msg.lower() in ['雷達回波圖', '雷達回波', 'radar']:
