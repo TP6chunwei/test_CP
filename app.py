@@ -632,6 +632,7 @@ def cabbage(fertilizer_amount, olivine_amount):
     # for plotting the graph
     data1 = [total_cost_ex, veg_total_price_ex, 0, net_profit_ex]
     data2 = [total_cost, veg_total_price, carbon_price, net_profit]
+    net_net = net_profit - net_profit_ex
     # description = f'原始農法 \n總成本: {round(data1[0], 1)} \n農產品價格: {round(data1[1], 1)} \n碳價格: {round(data1[2], 1)} \n淨收益: {round(data1[3], 1)} \n\n固碳農法 \n總成本: {round(data2[0], 1)} \n農產品價格: {round(data2[1], 1)} \n碳價格: {round(data2[2], 1)} \n淨收益: {round(data2[3], 1)}\n\n淨收益增長:{round(data2[3]-data1[3], 1)}'
     #description = f'原始農法 \n總成本: {data1[0]:.1f} \n農產品價格: {data1[1]:.1f} \n碳價格: {data1[2]:.1f} \n淨收益: {data1[3]:.1f} \n\n固碳農法 \n總成本: {data2[0]:.1f} \n農產品價格: {data2[1]:.1f} \n碳價格: {data2[2]:.1f} \n淨收益: {data2[3]:.1f}\n\n淨收益增長:{data2[3]-data1[3]:.1f}'
     #return description
@@ -662,7 +663,7 @@ def cabbage(fertilizer_amount, olivine_amount):
         plt.text(i + 0.2, v + 5000, f"{v:.1f}", color=color2, ha='center', va='bottom', fontsize=14)
     
     plt.grid(axis='y', linestyle='--', alpha=0.7)
-    #ax.text(0.75, 0.7, f'淨收益增長:{net_net:.1f}', transform=ax.transAxes, fontsize=18, ha='right',color='red')
+    ax.text(0.75, 0.7, f'淨收益增長:{net_net:.1f}', transform=ax.transAxes, fontsize=18, ha='right',color='red')
 
     random_string = ''.join(random.choices(string.ascii_letters + string.digits, k=6))
     plt.savefig(f'./images/test.png')
@@ -725,6 +726,7 @@ def brocolli(fertilizer_amount,olivine_amount):
     # for plotting the graph
     data1 = [total_cost_ex, veg_total_price_ex, 0, net_profit_ex]
     data2 = [total_cost, veg_total_price, carbon_price, net_profit]
+    net_net = net_profit - net_profit_ex
     #description = f'原始農法 \n總成本: {data1[0]:.1f} \n農產品價格: {data1[1]:.1f} \n碳價格: {data1[2]:.1f} \n淨收益: {data1[3]:.1f} \n\n固碳農法 \n總成本: {data2[0]:.1f} \n農產品價格: {data2[1]:.1f} \n碳價格: {data2[2]:.1f} \n淨收益: {data2[3]:.1f}\n\n淨收益增長:{data2[3]-data1[3]:.1f}'
     #return description
 
@@ -754,7 +756,7 @@ def brocolli(fertilizer_amount,olivine_amount):
         plt.text(i + 0.2, v + 5000, f"{v:.1f}", color=color2, ha='center', va='bottom', fontsize=14)
     
     plt.grid(axis='y', linestyle='--', alpha=0.7)
-    #ax.text(0.75, 0.7, f'淨收益增長:{net_net:.1f}', transform=ax.transAxes, fontsize=18, ha='right',color='red')
+    ax.text(0.75, 0.7, f'淨收益增長:{net_net:.1f}', transform=ax.transAxes, fontsize=18, ha='right',color='red')
     random_string = ''.join(random.choices(string.ascii_letters + string.digits, k=6))
     plt.savefig(f'./images/test.png')
     plt.clf()
