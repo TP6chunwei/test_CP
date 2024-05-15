@@ -760,18 +760,40 @@ def brocolli(fertilizer_amount,olivine_amount):
 # Message handling
 @handler.add(MessageEvent, message=[TextMessage, LocationMessage])
 def handle_message(event):
+    # if event.message.type == 'location':
+    #     address = event.message.address.replace('台', '臺')
+    #     msg = f'{address}\n\n{past_weather(address)}\n\n{current_weather(address)}\n\n{warning(address)}\n\n{forecast_weather_description(forecast_weather_data(address))}'
+    #     message = TextSendMessage(text=msg)
+    #     # reply images
+    #     random_string = forecast_weather_images(forecast_weather_data(address))
+    #     message2 = ImageSendMessage(
+    #         original_content_url=f'https://test-cp.onrender.com/static/test.png?{random_string}',
+    #         preview_image_url=f'https://test-cp.onrender.com/static/test.png?{random_string}'
+    #         )
+    #     line_bot_api.reply_message(event.reply_token, message)  
+    #     line_bot_api.reply_message(event.reply_token, message2)
     if event.message.type == 'location':
         address = event.message.address.replace('台', '臺')
-        msg = f'{address}\n\n{past_weather(address)}\n\n{current_weather(address)}\n\n{warning(address)}\n\n{forecast_weather_description(forecast_weather_data(address))}'
-        message = TextSendMessage(text=msg)
-        # reply images
+        
+        # Obtain weather information
+        past_weather_info = past_weather(address)
+        current_weather_info = current_weather(address)
+        warning_info = warning(address)
+        forecast_description_info = forecast_weather_description(forecast_weather_data(address))
+        
+        # Obtain weather images
         random_string = forecast_weather_images(forecast_weather_data(address))
+        
+        # Combine messages
+        msg = f'{address}\n\n{past_weather_info}\n\n{current_weather_info}\n\n{warning_info}\n\n{forecast_description_info}'
+        message = TextSendMessage(text=msg)
         message2 = ImageSendMessage(
             original_content_url=f'https://test-cp.onrender.com/static/test.png?{random_string}',
             preview_image_url=f'https://test-cp.onrender.com/static/test.png?{random_string}'
-            )
-        line_bot_api.reply_message(event.reply_token, message)  
-        line_bot_api.reply_message(event.reply_token, message2)
+        )
+        
+        # Send combined messages
+        line_bot_api.reply_message(event.reply_token, [message, message2])
     elif  event.message.type == 'text':
         msg = event.message.text
         if msg.lower() in ['雷達回波圖', '雷達回波', 'radar']:
