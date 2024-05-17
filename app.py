@@ -807,7 +807,7 @@ def handle_message(event):
         if msg in ['溫度分布', '溫度分布圖', '溫度分佈', '溫度分佈圖']:
             reply_temperature_image(event.reply_token)
         if msg == '成本效益':
-            msg2 = f'請輸入農產品的種類，添加肥料量以及橄欖石的量(以公斤為單位)'
+            msg2 = f'請輸入農產品的種類（暫時開放： 空心菜，高麗菜，花椰菜），還有添加肥料量以及橄欖石的量(以公斤為單位)，例如： 空心菜,1800,3000，請注意 ',' 為半型的（要用英文鍵盤）'
             message = TextSendMessage(text=msg2)
             line_bot_api.reply_message(event.reply_token, message)
         if ',' in msg:
