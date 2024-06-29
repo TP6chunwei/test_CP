@@ -821,12 +821,13 @@ def handle_message(event):
                 fertilizer_amount = inputs[1].strip()
                 olivine_amount = inputs[2].strip()
                 if crop_type in ['空心菜', '高麗菜', '花椰菜']:
+                    domain = "https://test-cp-kjnx.onrender.com"
                     if crop_type == '空心菜':
                         #water_spanish(fertilizer_amount,olivine_amount)
                         random_string = water_spanish(fertilizer_amount,olivine_amount)
                         message = ImageSendMessage(
-                            original_content_url=f'https://test-cp-kjnx.onrender.com/static/test.png?{random_string}',
-                            preview_image_url=f'https://test-cp-kjnx.onrender.com/static/test.png?{random_string}'
+                            original_content_url=f'{domain}/static/test.png?{random_string}',
+                            preview_image_url=f'{domain}/static/test.png?{random_string}'
                         )
                         line_bot_api.reply_message(event.reply_token,message)
     
@@ -836,8 +837,8 @@ def handle_message(event):
                     if crop_type == '高麗菜':
                         random_string = cabbage(fertilizer_amount,olivine_amount)
                         message = ImageSendMessage(
-                        original_content_url=f'https://test-cp.onrender.com/static/test.png?{random_string}',
-                        preview_image_url=f'https://test-cp.onrender.com/static/test.png?{random_string}'
+                        original_content_url=f'{domain}/static/test.png?{random_string}',
+                        preview_image_url=f'{domain}/static/test.png?{random_string}'
                         )
                         line_bot_api.reply_message(event.reply_token,message)
                         #msg = f'{cabbage(fertilizer_amount,olivine_amount)}'
@@ -846,8 +847,8 @@ def handle_message(event):
                     if crop_type == '花椰菜':
                         random_string = brocolli(fertilizer_amount,olivine_amount)
                         message = ImageSendMessage(
-                        original_content_url=f'https://test-cp.onrender.com/static/test.png?{random_string}',
-                        preview_image_url=f'https://test-cp.onrender.com/static/test.png?{random_string}'
+                        original_content_url=f'{domain}/static/test.png?{random_string}',
+                        preview_image_url=f'{domain}/static/test.png?{random_string}'
                         )
                         line_bot_api.reply_message(event.reply_token,message)
                         #msg = f'{brocolli(fertilizer_amount,olivine_amount)}'
