@@ -4,15 +4,17 @@ import numpy as np
 import requests
 import json
 import pandas as pd
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import statistics
-from linebot import (
+from linebot import ( # linebot.v3
     LineBotApi, WebhookHandler
 )
 from linebot.exceptions import (
     InvalidSignatureError
 )
-from linebot.models import (
+from linebot.models import ( # linebot.v3.models
     MessageEvent, TextMessage, TextSendMessage, ImageSendMessage,
     PostbackEvent, MemberJoinedEvent, LocationMessage
 )
@@ -22,6 +24,8 @@ import random
 import string
 import matplotlib as mpl
 from matplotlib.font_manager import fontManager
+import warnings
+warnings.filterwarnings('ignore')
 
 
 app = Flask(__name__, static_url_path='/static', static_folder='images')
@@ -545,7 +549,7 @@ def water_spanish(fertilizer_amount,olivine_amount):
     plt.grid(axis='y', linestyle='--', alpha=0.7)
     ax.text(0.75, 0.7, f'淨收益增長:{net_net:.1f}', transform=ax.transAxes, fontsize=18, ha='right',color='red')
     random_string = ''.join(random.choices(string.ascii_letters + string.digits, k=6))
-    plt.savefig(f'./images/test.png')
+    plt.savefig(f'./images/test_{random_string}.png') # water_spanish
     plt.clf()
     return random_string
     #return 'https://test-cp.onrender.com/static/test.png'
@@ -794,8 +798,8 @@ def handle_message(event):
         msg = f'{address}\n\n{past_weather_info}\n\n{current_weather_info}\n\n{warning_info}\n\n{forecast_description_info}'
         message = TextSendMessage(text=msg)
         message2 = ImageSendMessage(
-            original_content_url=f'https://test-cp.onrender.com/static/test.png?{random_string}',
-            preview_image_url=f'https://test-cp.onrender.com/static/test.png?{random_string}'
+            original_content_url=f'https://test-cp-kjnx.onrender.com/images/test_{random_string}.png',
+            preview_image_url=f'https://test-cp-kjnx.onrender.com/images/test_{random_string}.png'
         )
         
         # Send combined messages
@@ -821,8 +825,8 @@ def handle_message(event):
                         #water_spanish(fertilizer_amount,olivine_amount)
                         random_string = water_spanish(fertilizer_amount,olivine_amount)
                         message = ImageSendMessage(
-                        original_content_url=f'https://test-cp.onrender.com/static/test.png?{random_string}',
-                        preview_image_url=f'https://test-cp.onrender.com/static/test.png?{random_string}'
+                            original_content_url=f'https://test-cp.onrender.com/static/test.png?{random_string}',
+                            preview_image_url=f'https://test-cp.onrender.com/static/test.png?{random_string}'
                         )
                         line_bot_api.reply_message(event.reply_token,message)
     
@@ -878,7 +882,6 @@ def handle_member_join(event):
     line_bot_api.reply_message(event.reply_token, message)
 
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port)
-
-
+    # port = int(os.environ.get('PORT', 5000))
+    # app.run(host='0.0.0.0', port=port)
+    app.run(port=5000)
