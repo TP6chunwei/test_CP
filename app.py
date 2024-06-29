@@ -670,7 +670,7 @@ def cabbage(fertilizer_amount, olivine_amount):
     ax.text(0.75, 0.7, f'淨收益增長:{net_net:.1f}', transform=ax.transAxes, fontsize=18, ha='right',color='red')
 
     random_string = ''.join(random.choices(string.ascii_letters + string.digits, k=6))
-    plt.savefig(f'./images/test.png')
+    plt.savefig(f'./images/test_{random_string}.png') # cabbage
     plt.clf()
     return random_string
 
@@ -762,7 +762,7 @@ def brocolli(fertilizer_amount,olivine_amount):
     plt.grid(axis='y', linestyle='--', alpha=0.7)
     ax.text(0.75, 0.7, f'淨收益增長:{net_net:.1f}', transform=ax.transAxes, fontsize=18, ha='right',color='red')
     random_string = ''.join(random.choices(string.ascii_letters + string.digits, k=6))
-    plt.savefig(f'./images/test.png')
+    plt.savefig(f'./images/test_{random_string}.png') # brocolli
     plt.clf()
     return random_string
 
@@ -837,8 +837,8 @@ def handle_message(event):
                     if crop_type == '高麗菜':
                         random_string = cabbage(fertilizer_amount,olivine_amount)
                         message = ImageSendMessage(
-                            original_content_url=f'{domain}/static/test.png?{random_string}',
-                            preview_image_url=f'{domain}/static/test.png?{random_string}'
+                            original_content_url=f'{domain}/static/test_{random_string}.png',
+                            preview_image_url=f'{domain}/static/test_{random_string}.png'
                         )
                         line_bot_api.reply_message(event.reply_token,message)
                         #msg = f'{cabbage(fertilizer_amount,olivine_amount)}'
@@ -847,8 +847,8 @@ def handle_message(event):
                     if crop_type == '花椰菜':
                         random_string = brocolli(fertilizer_amount,olivine_amount)
                         message = ImageSendMessage(
-                            original_content_url=f'{domain}/static/test.png?{random_string}',
-                            preview_image_url=f'{domain}/static/test.png?{random_string}'
+                            original_content_url=f'{domain}/static/test_{random_string}.png',
+                            preview_image_url=f'{domain}/static/test_{random_string}.png',
                         )
                         line_bot_api.reply_message(event.reply_token,message)
                         #msg = f'{brocolli(fertilizer_amount,olivine_amount)}'
