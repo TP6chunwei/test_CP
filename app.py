@@ -551,7 +551,7 @@ def water_spanish(fertilizer_amount,olivine_amount):
     random_string = ''.join(random.choices(string.ascii_letters + string.digits, k=6))
     plt.savefig(f'./images/test_{random_string}.png') # water_spanish
     plt.clf()
-    return random_string, price
+    return random_string
     #return 'https://test-cp.onrender.com/static/test.png'
     
     #line_bot_api.reply_message(
